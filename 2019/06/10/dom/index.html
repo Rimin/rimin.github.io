@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>理解JS DOM事件 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                            
+                              <a class="tag" href="/tags/#DOM" title="DOM">DOM</a>
+                            
+                        </div>
+                        <h1>理解JS DOM事件</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-06-10
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>DOM 是针对HTML和XML文档定义的一个API, DOM描绘了一个层次化的节点树，允许开发人员添加、移除和修改页面的某一部分。DOM脱胎于 <code>Netscape</code> 及微软公司创始的 <code>DHTML(动态HTML)</code>, 但现在它已经成为表现和操作页面标记的真正的跨平台、语言的中立的方式。</p>
+</blockquote>
+<h3><span id="发展"> 发展</span></h3>
+<ul>
+<li>dom0:<br>
+主要定义了HTML和XML文档的底层结构。在DOM0中，DOM由两个模块组成：DOM Core（DOM核心）和DOM HTML。</li>
+<li>dom2:
+<ul>
+<li>DOM视图（DOM Views）：定义了跟踪不同文档视图的接口</li>
+<li>DOM事件（DOM Events）：定义了事件和事件处理的接口</li>
+<li>DOM样式（DOM Style）：定义了基于CSS为元素应用样式的接口</li>
+<li>DOM遍历和范围（DOM Traversal and Range）：定义了遍历和操作文档树的接口</li>
+</ul>
+</li>
+<li>dom3:
+<ul>
+<li>DOM加载和保存模块（DOM Load and Save）：引入了以统一方式加载和保存文档的方法</li>
+<li>DOM验证模块（DOM Validation）：定义了验证文档的方法</li>
+<li>DOM核心的扩展（DOM Style）：支持XML 1.0规范，涉及XML Infoset、XPath和XML Base</li>
+</ul>
+</li>
+</ul>
+<p>DOM2级和3级的目的在于扩展DOM API以满足操作XML的所有需求同时提供更好的错误处理及特性检测能力</p>
+<h3><span id="事件对象"> 事件对象</span></h3>
+<ul>
+<li>DOM中的事件对象</li>
+</ul>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/dom/1.png?raw=true" alt="image"></p>
+<ul>
+<li>IE中的事件对象</li>
+</ul>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/dom/2.png?raw=true" alt="image"></p>
+<p>可以看出还是有很大差别的，因此未来做到兼容，可以像类似下面这个函数</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> EventUtil = &#123;</span><br><span class="line">	addHandler: <span class="keyword">function</span> (element, <span class="keyword">type</span>, handler)&#123;</span><br><span class="line">		<span class="comment">// some code</span></span><br><span class="line">	&#125;,</span><br><span class="line">	getEvent: <span class="keyword">function</span> (<span class="keyword">event</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">event</span> ? <span class="keyword">event</span> : window<span class="variable">.event</span></span><br><span class="line">	&#125;,</span><br><span class="line">	getTarget: <span class="keyword">function</span> (<span class="keyword">event</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">event</span><span class="variable">.target</span> || <span class="keyword">event</span><span class="variable">.srcElement</span></span><br><span class="line">	&#125;,</span><br><span class="line">	preventDefault: <span class="keyword">function</span> (<span class="keyword">event</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">event</span><span class="variable">.preventDefault</span>) &#123;</span><br><span class="line">			<span class="keyword">event</span><span class="variable">.preventDefault</span>();</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">event</span><span class="variable">.returnValue</span> = false</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	removeHandle: <span class="keyword">function</span>(element, <span class="keyword">type</span>, handler)&#123;</span><br><span class="line">		<span class="comment">// some code</span></span><br><span class="line">	&#125;,</span><br><span class="line">	stopPropagation: <span class="keyword">function</span>(<span class="keyword">event</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">event</span><span class="variable">.stopPropagation</span>) &#123;</span><br><span class="line">			<span class="keyword">event</span><span class="variable">.stopPropagation</span>()</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">event</span><span class="variable">.cancelBubble</span> = true</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="事件处理"> 事件处理</span></h3>
+<ul>
+<li>DOM0级事件处理： dom0级事件会覆盖，即只能添加一个事件<br>
+将一个函数赋值给一个事件处理程序属性。简单且具有跨浏览器优势。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.id) <span class="comment">// "btn"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DOM2级事件处理程序：定义了两个方法，好处是<mark>可以添加多个事件处理程序</mark>。
+<ul>
+<li><code>addEventListener()</code> 只能用下面的方法移除</li>
+<li><code>removeEventListener()</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">btn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);</span><br><span class="line">&#125;, <span class="literal">false</span>);   <span class="comment">// 表示在冒泡阶段调用该函数</span></span><br><span class="line">btn.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"another event function of btn execute"</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>);  <span class="comment">// 表示在冒泡阶段调用该函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 按顺序执行</span></span><br><span class="line"><span class="comment">// 匿名函数无法移除</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果给一个body中的子节点同时注册冒泡和捕获事件，事件触发会按注册的顺序执行</p>
+</blockquote>
+<p><code>event.stopImmediatePropagation</code>和</p>
+<ul>
+<li>
+<p><code>event.stopImmediatePropagation</code>作用在当前节点以及事件链上的所有后续节点上，目的是在执行完当前事件处理程序之后，停止当前节点以及所有后续节点的事件处理程序的运行</p>
+</li>
+<li>
+<p><code>stopPropagation</code>的在执行完绑定到当前元素上的所有事件处理程序之后，停止执行所有后续节点的事件处理程序</p>
+</li>
+<li>
+<p>IE事件处理程序: 均添加到冒泡阶段</p>
+<ul>
+<li><code>attachEvent()</code></li>
+<li><code>detachEvent()</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">btn.attachEvent(<span class="string">'onclick'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.id) <span class="comment">// undefined </span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>) <span class="comment">// window </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意和dom0级和dom2级事件处理程序的区别在于<strong>作用域</strong>。以及在添加多个事件处理程序时不是按顺序执行，而是以<strong>相反的顺序</strong>执行。(这里的顺序是《JavaScript高级程序设计》中的，但是经过实验发现ie10,ie9是按顺序的，而ie8以下才按相反顺序)</p>
+<p>注意：只有DOM2级事件规定事件包括三个阶段：</p>
+<pre><code>1. 事件捕获阶段
+2. 处于目标阶段
+3. 事件冒泡阶段
+</code></pre>
+<p>例子：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"p"</span>&gt;</span></span><br><span class="line">       parent</span><br><span class="line">         <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"c"</span>&gt;</span></span><br><span class="line">             child</span><br><span class="line">         <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">         <span class="keyword">var</span> p = <span class="built_in">document</span>.getElementById(<span class="string">'p'</span>),</span></span><br><span class="line"><span class="javascript">         c = <span class="built_in">document</span>.getElementById(<span class="string">'c'</span>);</span></span><br><span class="line"><span class="actionscript">        c.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">             alert(<span class="string">'子节点捕获'</span>)</span></span><br><span class="line"><span class="actionscript">         &#125;, <span class="literal">true</span>);</span></span><br><span class="line"> </span><br><span class="line"><span class="actionscript">         c.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">             alert(<span class="string">'子节点冒泡'</span>)</span></span><br><span class="line"><span class="actionscript">         &#125;, <span class="literal">false</span>);</span></span><br><span class="line"> </span><br><span class="line"><span class="actionscript">         p.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">             alert(<span class="string">'父节点捕获'</span>)</span></span><br><span class="line"><span class="actionscript">        &#125;, <span class="literal">true</span>);</span></span><br><span class="line"> </span><br><span class="line"><span class="actionscript">         p.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">             alert(<span class="string">'父节点冒泡'</span>)</span></span><br><span class="line"><span class="actionscript">         &#125;, <span class="literal">false</span>);</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="区别总结"> 区别总结</span></h3>
+<ul>
+<li>
+<p>dom0级</p>
+<ul>
+<li>只能在冒泡阶段触发</li>
+<li>只能绑定一个事件函数</li>
+<li>事件函数this 指向被点击的元素本身</li>
+<li>通过置空onclick属性解绑事件</li>
+</ul>
+</li>
+<li>
+<p>dom2级事件</p>
+<ul>
+<li>非ie:
+<ul>
+<li>可绑定多个事件函数</li>
+<li>事件函数this 指向被点击的元素本身</li>
+<li>多个事件函数的书法顺序和绑定顺序一样</li>
+</ul>
+</li>
+<li>ie
+<ul>
+<li>事件函数this属性引用全局对象,因此要用 window.event</li>
+<li>多个事件函数的书法顺序和绑定顺序相反</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>dom3级事件：<br>
+规定了以下几种事件：</p>
+<ul>
+<li>UI事件当用户与页面上的元素交互时触发</li>
+<li>焦点事件当元素获得或者失去焦点时触发</li>
+<li>鼠标事件当用户通过鼠标在页面上执行操作时触发</li>
+<li>滚轮事件当使用鼠标滚轮或类似设备时触发</li>
+<li>文本事件当在文档中输入文本时触发</li>
+<li>键盘事件当用户通过键盘在页面上执行操作时触发</li>
+<li>合成事件当为IMEInput Method Editor输入法编辑器输入字符时触发</li>
+<li>变动事件当底层Dom结构发生变化时触发</li>
+<li>定义了自定义事件自定义事件不是由DOM原生触发的它的目的是让开发人员创建自己的事件</li>
+</ul>
+</li>
+</ul>
+<h3><span id="事件委托代理"> 事件委托（代理）</span></h3>
+<blockquote>
+<p>事件委托利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。</p>
+</blockquote>
+<ul>
+<li>优点：
+<ul>
+<li>提高document对象访问效率</li>
+<li>在页面中事件处理程序所花的时间少</li>
+<li>整个页面占用内存空间更少，能够提高整体性能。</li>
+<li>动态添加的元素无需额外注册事件。</li>
+<li>删除的元素无需注销事件，因为一般如果元素注册了事件删除后需手动删除以回收内存</li>
+</ul>
+</li>
+<li>缺点（局限）
+<ul>
+<li>事件冒泡的过程也需要耗时，越靠近顶层，事件的”事件传播链”越长，也就越耗时</li>
+<li>只能用于会冒泡的事件中，比如focus和blur本身是不会冒泡的</li>
+<li>mouseover和mouseout虽然也有事件冒泡，但是处理它们的时候需要特别的注意，因为需要经常计算它们的位置，处理起来不太容易。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"add"</span> <span class="attr">value</span>=<span class="string">"添加"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"remove"</span> <span class="attr">value</span>=<span class="string">"删除"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"move"</span> <span class="attr">value</span>=<span class="string">"移动"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"select"</span> <span class="attr">value</span>=<span class="string">"选择"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> oBox = <span class="built_in">document</span>.getElementById(<span class="string">"box"</span>);</span><br><span class="line">    oBox.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ev = ev || <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="keyword">var</span> target = ev.target || ev.srcElement;</span><br><span class="line">        <span class="keyword">if</span>(target.nodeName.toLocaleLowerCase() == <span class="string">'input'</span>)&#123;</span><br><span class="line">            <span class="keyword">switch</span>(target.id)&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'add'</span> :</span><br><span class="line">                    alert(<span class="string">'添加'</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'remove'</span> :</span><br><span class="line">                    alert(<span class="string">'删除'</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'move'</span> :</span><br><span class="line">                    alert(<span class="string">'移动'</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'select'</span> :</span><br><span class="line">                    alert(<span class="string">'选择'</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过绑定事件到父元素上再因为冒泡而判断target来判断点击的是哪个子元素</span></span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<p><a href="https://book.douban.com/subject/10546125/" target="_blank" rel="noopener">《JavaScript高级程序设计》</a></p>
+<p><a href="https://www.cnblogs.com/liugang-vip/p/5616484.html" target="_blank" rel="noopener">js中的事件委托或事件代理详解</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/26536815" target="_blank" rel="noopener">JavaScript 事件委托详解</a></p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/06/13/http/" data-toggle="tooltip" data-placement="top" title="HTTP 概述">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/06/05/safe/" data-toggle="tooltip" data-placement="top" title="前端安全相关">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                          <a class="tag" href="/tags/#DOM" title="DOM">DOM</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

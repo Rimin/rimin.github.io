@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg') 
+            /*config*/
+        
+    }
+</style>
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>Rimin&#39;s Blog</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">WHAT IS YOUR QUESTION?</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2019/04/30/eventLoop/">
+        <h2 class="post-title">
+            JS 事件循环机制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             同步和异步
+
+异步：简单说就是一个任务不是连续完成的，可以理解成该任务被人为分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段。比如，有一个任务是读取文件进行处理，任务的第一段是向操作系统发出请求，要求读取文件。然后，程序执行其他任务，等到操作系统返回文件，再接着执行任务的第二段（处理文件）。这种不连续的执行，就叫做异步。
+同步：相应地，连续的执行就叫做同步。由......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-30
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/22/call,apply,bind/">
+        <h2 class="post-title">
+            自行实现call apply bind
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            call， apply，bind三者都是用于改变对象绑定的this的值，但是在用法上有一些略微的差别。
+ call （Function.prototype.call()）
+例子：
+12345678910111213function Product(name, price) &#123;  this.name = name;  this.price = price;&#125;function......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-22
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/21/object/">
+        <h2 class="post-title">
+            深入理解JS对象和原型链
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            什么是对象？
+
+对象是一组没有特定属性的值，对象的每一个属性或方法都有一个名字，而每一个名字都映射到一个值，其中值可以是数据或函数。每一个对象都是基于一个引用类型创建的，这个引用类型可以是原生类型，也可以是开发人员自定义的类型。
+
+
+JavaScript中，一切都是对象，函数也是对象，数组也是对象，但是数组是对象的子集，而对于函数来说，函数与对象之间有一种“鸡生蛋蛋生鸡”的关
+
+
+所有的对象......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-21
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/19/hoisting/">
+        <h2 class="post-title">
+            提升和它背后的机制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             变量提升
+ var
+变量提升即将变量声明提升到它所在作用域的最开始的部分(这里就要先搞清楚它的作用域）
+123456789101112(function()&#123;    var a='One';    var b='Two';    var c='Three';&#125;)();//实际上它是这样子的(function()&#123;    var a,b,c;    a='One......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-19
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/18/dataType/">
+        <h2 class="post-title">
+            JS数据类型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             概述
+
+js基本类型： Undefined、Null、Boolean、Number、String、Symbol
+
+
+js引用类型： Object (Object类型，Array类型，Date类型，Function类型，RegExp类型)
+
+ 存储
+
+基本数据类型占 8字节，存储在栈内存
+如：
+
+123456789101112131415var num1 = 5;var num2 = num......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/18/crossOrign/">
+        <h2 class="post-title">
+            跨域
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             什么是跨域？
+
+当前访问的服务器所返回的页面，页面内的JS访问另一个服务器的资源的时候，出现跨域。（本地资源打开的页面去访问服务器，也是跨域）
+
+ 如何判断跨域？
+
+协议是否相同
+域名是否相同
+端口号是否相同
+
+举例：http://www.example.com/dir/page.html,
+这个url的协议：http,域名为：example.com，顶级域名:.com。主机名：www (......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/18/ closure/">
+        <h2 class="post-title">
+            深入理解闭包
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             函数的使用
+1）普通用法
+2）当值传递：也就是作为值来传递
+3）函数作为返回值
+以上就是函数常见的几种用法。
+后面这两种情况就会涉及到闭包，因此还会详细讨论
+123456789函数作为返回值function fn()&#123;    var min = 10;    return function compare(x)&#123;        if(x&gt;max)&#123;   ......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/04/16/this/">
+        <h2 class="post-title">
+            深入理解this
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            个人认为要行先理解了闭包，理解了js函数执行机制，作用域链之后再来理解this的指向更容易。判断es5的this指向应该按这三步：
+
+创建时 scope
+执行时 （作用域链，上下文 ）
+是否被显式，隐式改变
+
+
+this 是一个指针，一般指向其所在函数的执行环境（作用域链）的第二个环境对象（或者说是指向[[scope]]的第一个环境对象）（作用域链：执行环境（作用域链）= 函数内部环境 + ......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-04-16
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/03/04/browser/">
+        <h2 class="post-title">
+            浏览器内部机制
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+浏览器解释并显示 HTML 文件的方式是在 HTML 和 CSS 规范中指定的。这些规范由网络标准化组织 W3C（万维网联盟）进行维护。
+
+
+浏览器的用户界面并没有任何正式的规范，这是多年来的最佳实践自然发展以及彼此之间相互模仿的结果。
+
+ 浏览器的组成
+
+用户界面 ： 包括地址栏、前进/后退按钮、书签菜单等。除了浏览器主窗口显示的您请求的页面外，其他显示的各个部分都属于用户界面。
+浏览器......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-03-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2019/03/03/history/">
+        <h2 class="post-title">
+            站在2019看前端
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            虽然接触前端不到两年的时间，但是在这不到两年的时间，感受到前端发生了很大的变化，印象中，在 2017 年 大前端这个词才刚刚“衍生孵化”，而经过短短不到两年的发展，大前端真正迎来它的繁盛时刻，Node将触角伸向后端，npm带来各种可用的完备而成熟的库， 小程序,PWA, React Native又将触角伸向移动端，甚至像 Electron又把触角伸向pc桌面应用。前端逐渐变成“大前端”，也就......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Rimin on
+        2019-03-03
+    </p>
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/">&larr; Newer Posts</a>
+        </li>
+    
+    
+        <li class="next">
+            <a href="/page/3/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+
+            </div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            <a href="/tags/#JavaScript" title="JavaScript" rel="9">JavaScript</a>
+                        
+                            <a href="/tags/#自行实现系列" title="自行实现系列" rel="1">自行实现系列</a>
+                        
+                            <a href="/tags/#Concept" title="Concept" rel="1">Concept</a>
+                        
+                            <a href="/tags/#Broswser" title="Broswser" rel="2">Broswser</a>
+                        
+                            <a href="/tags/#跨域" title="跨域" rel="1">跨域</a>
+                        
+                            <a href="/tags/#docker" title="docker" rel="1">docker</a>
+                        
+                            <a href="/tags/#backend" title="backend" rel="1">backend</a>
+                        
+                            <a href="/tags/#事件循环" title="事件循环" rel="2">事件循环</a>
+                        
+                            <a href="/tags/#博客" title="博客" rel="1">博客</a>
+                        
+                            <a href="/tags/#发展" title="发展" rel="1">发展</a>
+                        
+                            <a href="/tags/#历史" title="历史" rel="1">历史</a>
+                        
+                            <a href="/tags/#思考" title="思考" rel="1">思考</a>
+                        
+                            <a href="/tags/#提升" title="提升" rel="1">提升</a>
+                        
+                            <a href="/tags/#继承" title="继承" rel="1">继承</a>
+                        
+                            <a href="/tags/#NodeJs" title="NodeJs" rel="2">NodeJs</a>
+                        
+                            <a href="/tags/#Broswer" title="Broswer" rel="1">Broswer</a>
+                        
+                            <a href="/tags/#安全" title="安全" rel="1">安全</a>
+                        
+                            <a href="/tags/#闭包" title="闭包" rel="1">闭包</a>
+                        
+                            <a href="/tags/#数据类型" title="数据类型" rel="1">数据类型</a>
+                        
+                            <a href="/tags/#HTTP" title="HTTP" rel="2">HTTP</a>
+                        
+                            <a href="/tags/#网络" title="网络" rel="2">网络</a>
+                        
+                            <a href="/tags/#缓存" title="缓存" rel="1">缓存</a>
+                        
+                            <a href="/tags/#DOM" title="DOM" rel="1">DOM</a>
+                        
+                            <a href="/tags/#Engine" title="Engine" rel="1">Engine</a>
+                        
+                            <a href="/tags/#数据库" title="数据库" rel="1">数据库</a>
+                        
+                            <a href="/tags/#this" title="this" rel="1">this</a>
+                        
+                            <a href="/tags/#原型链" title="原型链" rel="1">原型链</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+
+                        
+                            <img src="https://avatars2.githubusercontent.com/u/24391778?s=460&amp;v=4" />
+                        
+
+                        
+
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            
+
+                        </ul>
+                        
+                            <p>✉️ <a href="mailto:{{config.email}}">1519493072@qq.com</a></p>
+                        
+                    </div>
+                </section>
+                <hr>
+                
+                    <h5>RECENT POSTS</h3>
+                    <div class="widget">
+                      <ul>
+                        
+                          <li>
+                            <a href="/2020/02/16/docker/">docker初识与实践</a>
+                          </li>
+                        
+                          <li>
+                            <a href="/2019/09/18/datdabasepool/">一次疑似数据库死锁问题的排查</a>
+                          </li>
+                        
+                          <li>
+                            <a href="/2019/06/15/node/">Node内部机制</a>
+                          </li>
+                        
+                          <li>
+                            <a href="/2019/06/13/cache/">HTTP 缓存机制</a>
+                          </li>
+                        
+                          <li>
+                            <a href="/2019/06/13/http/">HTTP 概述</a>
+                          </li>
+                        
+                      </ul>
+                    </div>
+                  
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FOLLOW</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://github.com/Rimin" target="_blank">Github</a></li>
+                    
+                        <li><a href="https://juejin.im/user/5ac06ad6f265da23994eaaa9" target="_blank">掘金</a></li>
+                    
+                        <li><a href="https://segmentfault.com/u/rimini" target="_blank">segmentfault</a></li>
+                    
+                </ul>
+                
+            </div>
+        
+    </div>
+</div>
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

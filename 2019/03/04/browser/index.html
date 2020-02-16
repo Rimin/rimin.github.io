@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>浏览器内部机制 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Broswser" title="Broswser">Broswser</a>
+                            
+                              <a class="tag" href="/tags/#Engine" title="Engine">Engine</a>
+                            
+                        </div>
+                        <h1>浏览器内部机制</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-03-04
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p>浏览器解释并显示 HTML 文件的方式是在 HTML 和 CSS 规范中指定的。这些规范由网络标准化组织 W3C（万维网联盟）进行维护。</p>
+</blockquote>
+<blockquote>
+<p>浏览器的用户界面并没有任何正式的规范，这是多年来的最佳实践自然发展以及彼此之间相互模仿的结果。</p>
+</blockquote>
+<h4><span id="浏览器的组成"> 浏览器的组成</span></h4>
+<ol>
+<li>用户界面 ： 包括地址栏、前进/后退按钮、书签菜单等。除了浏览器主窗口显示的您请求的页面外，其他显示的各个部分都属于用户界面。</li>
+<li>浏览器引擎： 在用户界面和呈现引擎之间传送指令。</li>
+<li>呈现引擎： 负责显示请求的内容。如果请求的内容是 HTML，它就负责解析 HTML 和 CSS 内容，并将解析后的内容显示在屏幕上。</li>
+<li>网络： 用于网络调用，比如 HTTP 请求。其接口与平台无关，并为所有平台提供底层实现。</li>
+<li>用户界面后端： 用于绘制基本的窗口小部件，比如组合框和窗口。其公开了与平台无关的通用接口，而在底层使用操作系统的用户界面方法。</li>
+<li>JavaScript 解释器： 用于解析和执行 JavaScript 代码。</li>
+<li>数据存储： 这是持久层。浏览器需要在硬盘上保存各种数据，例如 Cookie。新的 HTML 规范 (HTML5) 定义了“网络数据库”，这是一个完整（但是轻便）的浏览器内数据库。</li>
+</ol>
+<p>本篇重点讲述 呈现引擎 的一些规则</p>
+<h4><span id="呈现流程呈现引擎"> 呈现流程（呈现引擎）</span></h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 处理 HTML 标记，构建 DOM 树。(字节数据-字符串-Token-Node-Dom)</span><br><span class="line">2. 处理 CSS 标记，构建 CSSOM 树。（与上诉构建DOM树并行）(字节数据-字符串-Token-Node-CSSOM)</span><br><span class="line">3. 将 DOM 树和 CSSOM 树融合成渲染树 render tree。</span><br><span class="line">4. 根据渲染树来布局layout（回流reflow），计算每个节点的几何信息。</span><br><span class="line">5. 在屏幕上绘制painting（重绘）各个节点。</span><br><span class="line">6. 浏览器会将各层的信息发送给GPU，GPU会将各层合成（composite），显示在屏幕上。</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/browser/1.png?raw=true" alt="image"></p>
+<p>⚠️ css文件不会阻塞html的解析，但是会阻塞html的渲染, 而js会阻塞解析。</p>
+<p>虽然浏览器内部十分复杂，对于呈现来说， HTML 和 CSS 解析器相对于一般的语法解析还是不一样的。</p>
+<ul>
+<li>HTML 解析器</li>
+</ul>
+<blockquote>
+<p>HTML 和 XML 非常相似。有很多 XML 解析器可以使用。HTML 存在一个 XML 变体 (XHTML)，那么有什么大的区别呢？区别在于 HTML 的处理更为“宽容”，它允许您省略某些隐式添加的标记，有时还能省略一些起始或者结束标记等等。和 XML 严格的语法不同，HTML 整体来看是一种“软性”的语法。<br>
+简单看一下HTML的解析算法：</p>
+</blockquote>
+<p>比如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    Hello world</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>初始状态是数据状态。遇到字符 &lt; 时，状态更改为“标记打开状态”。接收一个 a-z 字符会创建“起始标记”，状态更改为“标记名称状态”。这个状态会一直保持到接收 &gt; 字符。在此期间接收的每个字符都会附加到新的标记名称上。在本例中，我们创建的标记是 html 标记。</p>
+<p>遇到 &gt; 标记时，会发送当前的标记，状态改回“数据状态”。<body> 标记也会进行同样的处理。目前 html 和 body 标记均已发出。现在我们回到“数据状态”。接收到 Hello world 中的 H 字符时，将创建并发送字符标记，直到接收 </body> 中的 &lt;。我们将为 Hello world 中的每个字符都发送一个字符标记。</p>
+<p>现在我们回到“标记打开状态”。接收下一个输入字符 / 时，会创建 end tag token 并改为“标记名称状态”。我们会再次保持这个状态，直到接收 &gt;。然后将发送新的标记，并回到“数据状态”。 输入也会进行同样的处理。</p>
+<ul>
+<li>CSS树的构建</li>
+</ul>
+<blockquote>
+<p>和 HTML 不同，CSS 是上下文无关的语法，可以使用简介中描述的各种解析器进行解析。</p>
+</blockquote>
+<ul>
+<li>呈现树的构建</li>
+</ul>
+<p>WebKits RenderObject 类是所有呈现器的基类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RenderObject</span> </span>&#123;</span><br><span class="line">  virtual <span class="keyword">void</span> layout();</span><br><span class="line">  virtual <span class="keyword">void</span> paint(PaintInfo);</span><br><span class="line">  virtual <span class="keyword">void</span> rect repaintRect();</span><br><span class="line">  Node* node;  <span class="comment">//the DOM node</span></span><br><span class="line">  RenderStyle* style;  <span class="comment">// the computed style</span></span><br><span class="line">  RenderLayer* containgLayer; <span class="comment">//the containing z-index layer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面这段 WebKit 代码描述了根据 display 属性的不同，针对同一个 DOM 节点应创建什么类型的呈现器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">RenderObject* RenderObject::createObject(Node* node, RenderStyle* style)</span><br><span class="line">&#123;</span><br><span class="line">    Document* doc = node-&gt;<span class="built_in">document</span>();</span><br><span class="line">    RenderArena* arena = doc-&gt;renderArena();</span><br><span class="line">    ...</span><br><span class="line">    RenderObject* o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (style-&gt;display()) &#123;</span><br><span class="line">        <span class="keyword">case</span> NONE:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> INLINE:</span><br><span class="line">            o = <span class="keyword">new</span> (arena) RenderInline(node);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> BLOCK:</span><br><span class="line">            o = <span class="keyword">new</span> (arena) RenderBlock(node);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> INLINE_BLOCK:</span><br><span class="line">            o = <span class="keyword">new</span> (arena) RenderBlock(node);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> LIST_ITEM:</span><br><span class="line">            o = <span class="keyword">new</span> (arena) RenderListItem(node);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以这就解释了为什么当 <code>display: none;</code>时， 元素是不占物理空间的。</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/browser/2.png?raw=true" alt="image"></p>
+<h4><span id="reflow-and-repaint"> reflow AND repaint</span></h4>
+<h5><span id="reflow回流"> reflow（回流）</span></h5>
+<blockquote>
+<p>浏览器为了<code>重新渲染部分或整个页面</code>，重新计算页面元素位置和几何结构的进程叫做reflow</p>
+</blockquote>
+<ul>
+<li>什么时候会导致reflow发生呢？</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 改变窗口大小</span><br><span class="line">- 改变文字大小</span><br><span class="line">- 添加/删除样式表</span><br><span class="line">- 内容的改变，(用户在输入框中写入内容也会)</span><br><span class="line">- 激活伪类，如:hover</span><br><span class="line">- 操作class属性</span><br><span class="line">- 脚本操作DOM</span><br><span class="line">- 计算offsetWidth和offsetHeight</span><br><span class="line">- 设置style属性</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">🌝🌝插播一个问题 ：如何插入几万个 DOM，如何实现页面不卡顿？</span><br><span class="line"><span class="number">1.</span> requestAnimationFrame 的方式去循环的插入 DOM</span><br><span class="line"><span class="number">2.</span> 虚拟滚动（virtualized scroller）只渲染可视区域内的内容，非可见区域的那就完全不渲染了，当用户在滚动的时候就实时去替换渲染的内容。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>reflow优化建议</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 不要一条一条地修改 DOM 的样式，预先定义好 class，然后修改 DOM 的 className</span><br><span class="line">- 把 DOM 离线后修改，比如：先把 DOM 给 display:none (有一次 Reflow)，然后你修改100次，然后再把它显示出来</span><br><span class="line">- 尽可能不要修改影响范围比较大的 DOM</span><br><span class="line">- 为动画的元素使用绝对定位 absolute / fixed</span><br><span class="line">- 不要使用 table 布局，可能很小的一个小改动会造成整个 table 的重新布局</span><br><span class="line">- 避免设置大量的style属性，因为通过设置style属性改变结点样式的话，每一次设置都会触发一次reflow，所以最好是使用class属性</span><br><span class="line">- 如果CSS里面有计算表达式，每次都会重新计算一遍，出发一次reflow</span><br><span class="line">- CSS 选择符从**右往左**匹配查找，避免节点层级过多</span><br><span class="line">- 将频繁重绘或者回流的节点设置为图层，图层能够阻止该节点的渲染行为影响别的节点。比如对于 video 标签来说，浏览器会自动将该节点变为图层。</span><br></pre></td></tr></table></figure>
+<h5><span id="repaint"> repaint</span></h5>
+<blockquote>
+<p>屏幕的一部分要重画，比如某个CSS的背景色变了。但是元素的几何尺寸没有变。是在一个元素的外观被改变，但没有改变布局的情况下发生的当repaint发生时，浏览器会验证DOM树上所有其他节点的visibility 属性。</p>
+</blockquote>
+<p>常见的重绘元素：<br>
+<code>color</code> <code>border-style</code> <code>visibility</code> <code>background</code> <code>text-decoration</code> <code>background-image</code> <code>background-position</code> <code>background-repeat</code> <code>outline-color</code> <code>border-radius</code> <code>box-shadow</code> …</p>
+<p>CSS高消耗属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- box-shadows</span><br><span class="line">- border-radius</span><br><span class="line">- transparency</span><br><span class="line">- transforms</span><br><span class="line">- CSS filters（性能杀手）</span><br></pre></td></tr></table></figure>
+<p>CSS2 规范定义了绘制流程的顺序。绘制的顺序其实就是元素进入堆栈样式上下文的顺序。这些堆栈会从后往前绘制，因此这样的顺序会影响绘制。块呈现器的堆栈顺序如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 背景颜色</span><br><span class="line">2. 背景图片</span><br><span class="line">3. 边框</span><br><span class="line">4. 子代</span><br><span class="line">5. 轮廓</span><br></pre></td></tr></table></figure>
+<h4><span id="事件执行机制相关"> 事件执行机制相关</span></h4>
+<ul>
+<li>当 Event loop 执行完 <code>Microtasks</code> 后，会判断 document 是否需要更新。因为浏览器是 60Hz 的刷新率，每 16ms 才会更新一次。<br>
+然后判断是否有 <code>resize</code> 或者 <code>scroll</code> ，有的话会去触发事件，所以 resize 和 scroll 事件也是至少 16ms 才会触发一次，并且自带节流功能。</li>
+<li>判断是否触发了 <code>media query</code></li>
+<li>更新动画并且发送事件</li>
+<li>判断是否有全屏操作事件</li>
+<li>执行 <code>requestAnimationFrame</code>回调</li>
+<li>执行 <code>IntersectionObserver</code> 回调，该方法用于判断元素是否可见，可以用于懒加载上，但是兼容性不好</li>
+<li>更新界面<br>
+以上就是一帧中可能会做的事情。如果在一帧中有空闲时间，就会去执行 <code>requestIdleCallback</code> 回调。</li>
+</ul>
+<p>最后： 还是抛出一个常见的问题：</p>
+<p>Q: 当浏览器输入URL后发生了什么？</p>
+<p>A:<br>
+<img src="https://github.com/Rimin/rimin.github.io/blob/master/img/browser/3.png?raw=true" alt="image"></p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/04/16/this/" data-toggle="tooltip" data-placement="top" title="深入理解this">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/03/03/history/" data-toggle="tooltip" data-placement="top" title="站在2019看前端">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Broswser" title="Broswser">Broswser</a>
+                        
+                          <a class="tag" href="/tags/#Engine" title="Engine">Engine</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>JS数据类型 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                            
+                              <a class="tag" href="/tags/#数据类型" title="数据类型">数据类型</a>
+                            
+                        </div>
+                        <h1>JS数据类型</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-04-18
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h4><span id="概述"> 概述</span></h4>
+<blockquote>
+<p>js基本类型： Undefined、Null、Boolean、Number、String、Symbol</p>
+</blockquote>
+<blockquote>
+<p>js引用类型： Object (Object类型，Array类型，Date类型，Function类型，RegExp类型)</p>
+</blockquote>
+<h4><span id="存储"> 存储</span></h4>
+<ul>
+<li>基本数据类型占 <code>8字节</code>，存储在<code>栈内存</code><br>
+如：</li>
+</ul>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var num1 = 5;</span><br><span class="line">var num2 = num1;</span><br><span class="line"></span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br><span class="line">|<span class="string">      </span>|<span class="string">   </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br><span class="line">|<span class="string"> num1 </span>|<span class="string"> 5 </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br><span class="line">|<span class="string"> num2 </span>|<span class="string"> 5 </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br><span class="line">|<span class="string"> num1 </span>|<span class="string"> 5 </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">___</span>|</span><br></pre></td></tr></table></figure>
+<ul>
+<li>引用类型变量只保存对对象，数组，和函数等引用类型的值得引用（即指针或者说内存地址），而引用类型的值保存在<code>堆</code>中</li>
+</ul>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = new Object</span><br><span class="line">var obj2 = obj1</span><br><span class="line">obj1.name = 'Jack'</span><br><span class="line">console.log(obj2.name) // 'Jack'</span><br><span class="line"></span><br><span class="line">      栈                      堆</span><br><span class="line">                        _______________</span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string">        </span>|<span class="string"> </span>|<span class="string">--------—</span>|<span class="string">  </span>|</span><br><span class="line">|<span class="string">      </span>|<span class="string">       </span>|<span class="string">  _____\</span>|<span class="string"> </span>|<span class="string"> Obj1    </span>|<span class="string">   </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string"> /     /</span>|<span class="string"> </span>|<span class="string">name:jack</span>|<span class="string">   </span>|</span><br><span class="line">|<span class="string"> obj1 </span>|<span class="string"> x0c01 </span>|<span class="string">/       </span>|<span class="string">  ---------    </span>|<span class="string">  </span></span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string">        </span>|<span class="string">_______________</span>|</span><br><span class="line"></span><br><span class="line">              </span><br><span class="line">                        ________________</span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string">        </span>|<span class="string"> </span>|<span class="string">--------—</span>|<span class="string">  </span>|</span><br><span class="line">|<span class="string"> obj2 </span>|<span class="string"> x03c1 </span>|<span class="string">--\ _____\</span>|<span class="string"> </span>|<span class="string"> Obj1  </span>|<span class="string">   </span>|</span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string"> /     /</span>|<span class="string"> </span>|<span class="string">name:jack</span>|<span class="string">   </span>|</span><br><span class="line">|<span class="string"> obj1 </span>|<span class="string"> x0c01 </span>|<span class="string">/       </span>|<span class="string">  ---------    </span>|<span class="string">  </span></span><br><span class="line">|<span class="string">______</span>|<span class="string">_______</span>|<span class="string">        </span>|<span class="string">_______________</span>|</span><br></pre></td></tr></table></figure>
+<ul>
+<li>二进制浮点数</li>
+</ul>
+<blockquote>
+<p>JavaScript 中的数字类型是基于“二进制浮点数”实现的, 64 bit , 8 字节 使用的是“双精度”格式。<br>
+浮点数值最高精度是17位小数，但在进行计算时其精确度远远不如整数。会有舍入误差</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span> + <span class="number">0.2</span>; <span class="comment">// 结果是0.30000000000000004</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a === b); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(a*<span class="number">10</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(b*<span class="number">10</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//0.30000000000000004</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = <span class="number">1.1</span></span><br><span class="line">f--  <span class="comment">//0.10000000000000009 (由于浮点舍入错误所致)</span></span><br></pre></td></tr></table></figure>
+<h4><span id="数据类型的判别"> 数据类型的判别</span></h4>
+<ul>
+<li><code>NaN</code>属于<code>Number</code>类型，并且 <code>NaN</code>不等于任何值，包括它自己</li>
+<li>typeof: （判断不了引用类型）除了<code>null</code>都可以正确判断类型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> <span class="comment">// "object"</span></span><br><span class="line"><span class="comment">/***为什么会出现这种情况呢？因为在 JS 的最初版本中，使用的是 32 位系统，为了性能考虑使用低位存储了变量的类型信息，000 开头代表是对象，然而 null 表示为全零，所以将它错误的判断为 object 。虽然现在的内部类型判断代码已经改变了，但是对于这个 Bug 却是一直流传下来。****/</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment">// "object"</span></span><br><span class="line"><span class="keyword">typeof</span> b <span class="comment">// "undefined" 虽然没有第一但是还是会显示为undefined类型</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>  <span class="comment">// "number"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>instanceof</code> (通过原型链来判断)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;&#125;) <span class="keyword">instanceof</span> <span class="built_in">Function</span> <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>] <span class="keyword">instanceof</span> <span class="built_in">Array</span> <span class="comment">// true</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>) <span class="keyword">instanceof</span> <span class="built_in">Number</span> <span class="comment">// true</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) <span class="keyword">instanceof</span> <span class="built_in">Boolean</span> <span class="comment">// true</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'123'</span>) <span class="keyword">instanceof</span> <span class="built_in">String</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>当然，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>因此，instanceof 只能用来判断对象类型，原始类型不可以，所有的对象类型instaceof Object 都是<code>true</code></p>
+<ul>
+<li>
+<p><code>constructor</code>（通过构造器判断，但是没有绝对可靠性）</p>
+</li>
+<li>
+<p><code>Object.prototype.toString</code> （这个方法只能判断 js 的内置数据类型）</p>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(<span class="number">123</span>) <span class="comment">// "[object Number]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(<span class="string">'string'</span>) <span class="comment">// "[object String]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(true) <span class="comment">// "[object Boolean]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(Symbol(<span class="number">12</span>)) <span class="comment">// "[object Symbol]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(&#123;&#125;) <span class="comment">// "[object Object]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]) <span class="comment">// "[object Array]"</span></span><br><span class="line">Object<span class="selector-class">.prototype</span><span class="selector-class">.toString</span><span class="selector-class">.call</span>(function()&#123;&#125;) <span class="comment">// "[object Function]"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过 <code>Object.getPrototypeOf(a) === Array.prototype</code> 判断引用类型</li>
+<li><code>Array.prototype.isPrototypeOf(a)</code> 判断引用类型</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a  = <span class="literal">[]</span>;</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Array</span>.</span></span>prototype.is<span class="constructor">PrototypeOf(<span class="params">a</span>)</span>; </span><br><span class="line"></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>get<span class="constructor">PrototypeOf(<span class="params">a</span>)</span><span class="operator">  === </span><span class="module-access"><span class="module"><span class="identifier">Array</span>.</span></span>prototype;</span><br></pre></td></tr></table></figure>
+<p>数组还有一个方法，是es5新增的方法：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Array</span>.</span></span>is<span class="constructor">Array()</span></span><br></pre></td></tr></table></figure>
+<h4><span id="类型转换"> 类型转换</span></h4>
+<blockquote>
+<p>JavaScript是动态类型，变量是没有类型的，可以随时赋予任意值</p>
+</blockquote>
+<blockquote>
+<p>js类型转换有显式和隐式转换，都会遵循一定的原理。</p>
+</blockquote>
+<h5><span id="隐式转换"> 隐式转换</span></h5>
+<p>先来看下面的代码：😲</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;+[] <span class="comment">//0</span></span><br><span class="line">[<span class="meta"></span>] + &#123;&#125; <span class="comment">// "[object Object]"</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;&#125;+[]</span><br><span class="line">console.log(a) <span class="comment">// [object Object]</span></span><br><span class="line">console.log(<span class="keyword">typeof</span> a) <span class="comment">// string</span></span><br><span class="line"></span><br><span class="line">[<span class="meta"></span>] == <span class="literal">false</span> <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">&#123;&#125; == <span class="literal">true</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>条件判断：  在条件判断时，除了 <code>undefined</code>， <code>null</code>， <code>false</code>，<code>NaN</code> ， <code>''</code>， <code>0</code>， <code>-0</code>，其他所有值都转为 <code>true</code>，包括所有对象。</p>
+ <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span><span class="params">(undefined)</span></span> &#123;console.log(<span class="string">"false, 不执行"</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">if</span><span class="params">([] || &#123;&#125;)</span></span> &#123;console.log(<span class="string">"true, 执行"</span>)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>隐式转换原理判断<br>
+若想从源头出发，理解一些怪异的类型转换，就需要看 ECMA-262详细的规范,从而探究其内部原理,我们从这段内部原理示意代码开始：</p>
+</li>
+</ol>
+<h6><span id="原理代码"> 原理代码</span></h6>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ECMA-262, section 9.1, page 30. Use null/undefined for no hint,</span></span><br><span class="line"><span class="comment">// (1) for number hint, and (2) for string hint.</span></span><br><span class="line"><span class="keyword">function</span> <span class="constructor">ToPrimitive(<span class="params">x</span>, <span class="params">hint</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// Fast case check.</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="constructor">IS_STRING(<span class="params">x</span>)</span>) return x;</span><br><span class="line">  <span class="comment">// Normal behavior.</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="constructor">IS_SPEC_OBJECT(<span class="params">x</span>)</span>) return x;</span><br><span class="line">  <span class="keyword">if</span> (<span class="constructor">IS_SYMBOL_WRAPPER(<span class="params">x</span>)</span>) throw <span class="constructor">MakeTypeError(<span class="params">kSymbolToPrimitive</span>)</span>;</span><br><span class="line">  <span class="keyword">if</span> (hint<span class="operator"> == </span>NO_HINT) hint = (<span class="constructor">IS_DATE(<span class="params">x</span>)</span>) ? STRING_HINT : NUMBER_HINT;</span><br><span class="line">  return (hint<span class="operator"> == </span>NUMBER_HINT) ? <span class="constructor">DefaultNumber(<span class="params">x</span>)</span> : <span class="constructor">DefaultString(<span class="params">x</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="keyword">function</span> <span class="constructor">DefaultNumber(<span class="params">x</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="constructor">IS_SYMBOL_WRAPPER(<span class="params">x</span>)</span>) &#123;</span><br><span class="line">    var valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (<span class="constructor">IS_SPEC_FUNCTION(<span class="params">valueOf</span>)</span>) &#123;</span><br><span class="line">      var v = %<span class="constructor">_CallFunction(<span class="params">x</span>, <span class="params">valueOf</span>)</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="constructor">IsPrimitive(<span class="params">v</span>)</span>) return v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (<span class="constructor">IS_SPEC_FUNCTION(<span class="params">toString</span>)</span>) &#123;</span><br><span class="line">      var s = %<span class="constructor">_CallFunction(<span class="params">x</span>, <span class="params">toString</span>)</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="constructor">IsPrimitive(<span class="params">s</span>)</span>) return s;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  throw <span class="constructor">MakeTypeError(<span class="params">kCannotConvertToPrimitive</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="keyword">function</span> <span class="constructor">DefaultString(<span class="params">x</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="constructor">IS_SYMBOL_WRAPPER(<span class="params">x</span>)</span>) &#123;</span><br><span class="line">    var toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (<span class="constructor">IS_SPEC_FUNCTION(<span class="params">toString</span>)</span>) &#123;</span><br><span class="line">      var s = %<span class="constructor">_CallFunction(<span class="params">x</span>, <span class="params">toString</span>)</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="constructor">IsPrimitive(<span class="params">s</span>)</span>) return s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (<span class="constructor">IS_SPEC_FUNCTION(<span class="params">valueOf</span>)</span>) &#123;</span><br><span class="line">      var v = %<span class="constructor">_CallFunction(<span class="params">x</span>, <span class="params">valueOf</span>)</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="constructor">IsPrimitive(<span class="params">v</span>)</span>) return v;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  throw <span class="constructor">MakeTypeError(<span class="params">kCannotConvertToPrimitive</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码的逻辑是这样的：</p>
+</blockquote>
+<ol>
+<li>如果变量为字符串，直接返回.</li>
+<li>如果!IS_SPEC_OBJECT(x)，直接返回.</li>
+<li>如果IS_SYMBOL_WRAPPER(x)，则抛出异常</li>
+<li>否则会根据传入的hint来调用DefaultNumber和DefaultString，比如如果为Date对象，会调用DefaultString</li>
+<li>DefaultNumber：首先x.valueOf，如果为primitive，则返回valueOf后的值，否则继续调用x.toString，如果为primitive，则返回toString后的值，否则抛出异常</li>
+<li>DefaultString：和DefaultNumber正好相反，先调用toString，如果不是primitive再调用valueOf.</li>
+</ol>
+<p>比如：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span>+ &#123;&#125; // <span class="string">"1[object Object]"</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">1 </span>+ [] // <span class="string">"1"</span></span><br></pre></td></tr></table></figure>
+<p>{}和1首先会调用ToPrimitive {}会走到DefaultNumber，首先会调用<code>valueOf</code>，返回的是<code>Object</code> {}，不是<code>primitive</code>类型，从而继续走到<code>toString</code>，返回<code>[object Object]</code>，是<code>String</code>类型 最后加操作，结果为<code>[object Object]1</code> 再比如有人问你[] + 1输出啥时，你可能知道应该怎么去计算了，先对[]调用ToPrimitive，返回空字符串，最后结果为&quot;1&quot;。</p>
+<ol start="3">
+<li>
+<p>四则运算符</p>
+<ul>
+<li><code>+</code> 有字符串，另一方也转换为字符串。如果一方不是字符串或者数字，那么会将它转换为数字或者字符串</li>
+<li><code>+ - * /</code>: 只要其中一方是数字，那么另一方就会被转为数字</li>
+</ul>
+</li>
+<li>
+<p>比较运算符</p>
+<p>x == y,其中x和y是值</p>
+<ol>
+<li>若Type(x)与Type(y)相同，则
+<ul>
+<li>若Type(x)为Udefined,返回<code>true</code></li>
+<li>若Type(x)为Null, 返回<code>true</code></li>
+<li>若Type(x)为Number,则
+<ul>
+<li>若<code>x</code>为<code>NaN</code>, 返回<code>false</code></li>
+<li>若<code>y</code>为<code>NaN</code>, 返回<code>false</code></li>
+<li>若<code>x</code>与<code>y</code>为相等数值，返回<code>true</code></li>
+<li>若<code>x</code>为<code>+0</code>且<code>y</code>为<code>-0</code>，或<code>x</code>为<code>-0</code>且<code>y</code>为<code>+0</code>，返回<code>true</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>若x为null且y为Undefined，返回true，反之同理，即<code>null == undefined</code></li>
+<li>若Type(x)为Number且Type(y)为String, 比较 x == ToNumber(y)的结果，反之同理</li>
+<li>若 Type(x) 为Boolean，返回比较ToNumber(x) == y 的结果，反之同理</li>
+<li>若Type(x) 为String或 Number且Type(y)为 Object,返回比较x == ToNumber(y)的结果,反之同理</li>
+<li>返回 <code>false</code></li>
+</ol>
+</li>
+</ol>
+<p>验证：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> <span class="string">==</span> <span class="literal">false</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="string">'0'</span> <span class="string">==</span> <span class="literal">false</span> <span class="string">//</span> <span class="string">ture</span></span><br><span class="line"><span class="string">[]</span> <span class="string">==</span> <span class="literal">false</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="string">''</span> <span class="string">==</span> <span class="number">0</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="string">'0'</span> <span class="string">==</span> <span class="number">0</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="number">0</span> <span class="string">==</span> <span class="string">[]</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="string">''</span> <span class="string">==</span> <span class="string">[]</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="literal">null</span> <span class="string">==</span> <span class="string">undefined</span> <span class="string">//</span> <span class="literal">true</span></span><br><span class="line"><span class="string">&#123;&#125;</span> <span class="string">==</span> <span class="literal">true</span> <span class="string">//</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h5><span id="显示转换"> 显示转换</span></h5>
+<p>类型转换表</p>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th>string</th>
+<th>number</th>
+<th>boolean</th>
+<th>object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>“undefined”</td>
+<td>NaN</td>
+<td>false</td>
+<td>throws TypeError</td>
+</tr>
+<tr>
+<td>null</td>
+<td>“null”</td>
+<td>0</td>
+<td>false</td>
+<td>throws TypeError</td>
+</tr>
+<tr>
+<td>true</td>
+<td>“true”</td>
+<td>1</td>
+<td>true</td>
+<td>new Boolean(false)</td>
+</tr>
+<tr>
+<td>false</td>
+<td>“false”</td>
+<td>0</td>
+<td>false</td>
+<td>new Boolean(false)</td>
+</tr>
+<tr>
+<td>“”</td>
+<td></td>
+<td>0</td>
+<td>false</td>
+<td>new String(’’)</td>
+</tr>
+<tr>
+<td>0 (-0)</td>
+<td>“0”</td>
+<td></td>
+<td>false</td>
+<td>new Number(0)</td>
+</tr>
+<tr>
+<td>NaN</td>
+<td>‘NaN’</td>
+<td></td>
+<td>false</td>
+<td>new Number(NaN)</td>
+</tr>
+<tr>
+<td>Infinity</td>
+<td>“Infinity”</td>
+<td></td>
+<td>true</td>
+<td>new Number(Infinity)</td>
+</tr>
+<tr>
+<td><a href="%E7%A9%BA%E6%95%B0%E7%BB%84"></a></td>
+<td>‘’</td>
+<td>0</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>[9]</td>
+<td>‘9’</td>
+<td>9</td>
+<td>true</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor">Object(<span class="params">undefined</span>)</span> <span class="comment">// &#123;&#125; 返回一个空对象</span></span><br><span class="line"><span class="constructor">Object(<span class="params">null</span>)</span> <span class="comment">// &#123;&#125;  返回一个空对象</span></span><br><span class="line"></span><br><span class="line">var n = <span class="number">123456.789</span></span><br><span class="line">n.<span class="keyword">to</span><span class="constructor">Fixed(0)</span> <span class="comment">// "123457" </span></span><br><span class="line">n.<span class="keyword">to</span><span class="constructor">Exponential(1)</span> <span class="comment">// "1.2e+5"</span></span><br><span class="line">n.<span class="keyword">to</span><span class="constructor">Precision(5)</span> <span class="comment">// "1.2346e+5"</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">1000000000000000000000000000000</span></span><br><span class="line">parse<span class="constructor">Int(<span class="params">n</span>)</span> <span class="comment">// 1 因为这里会将n先用科学计数法转换成 "1e+30" 然后再parseInt截断成 1</span></span><br><span class="line">n.<span class="keyword">to</span><span class="constructor">String()</span>  <span class="comment">// "1e+30"</span></span><br><span class="line"></span><br><span class="line"><span class="literal">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span>.<span class="keyword">to</span><span class="constructor">String()</span> <span class="comment">// "1,2,3"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var a = <span class="keyword">new</span> <span class="constructor">Boolean(<span class="params">false</span>)</span> </span><br><span class="line">var b = <span class="keyword">new</span> <span class="constructor">Number(0)</span></span><br><span class="line">var c = <span class="keyword">new</span> <span class="constructor">String(<span class="string">""</span>)</span></span><br><span class="line">a<span class="operator"> &amp;&amp; </span>b<span class="operator"> &amp;&amp; </span>c   <span class="comment">// 1</span></span><br><span class="line"><span class="comment">// a, b, c为假值对象</span></span><br><span class="line"></span><br><span class="line">a<span class="operator"> === </span><span class="literal">false</span> <span class="comment">// false 这里由于类型不同，当然不相等</span></span><br><span class="line">a<span class="operator"> == </span><span class="literal">false</span> <span class="comment">// true  这里不是严格相等，而是将他们进行转换后值相等</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var c = &#123;</span><br><span class="line">    value<span class="constructor">Of()</span>&#123;</span><br><span class="line">        return <span class="number">123</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">to</span><span class="constructor">String()</span>&#123;</span><br><span class="line">        return <span class="number">456</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="constructor">Number(<span class="params">c</span>)</span> <span class="comment">// 123 // 这个例子也说明了上面转换的原理。且可以改写</span></span><br></pre></td></tr></table></figure>
+<h4><span id="在-typescript中的应用"> 在 TypeScript中的应用</span></h4>
+<blockquote>
+<p>TypeScript 是 JavaScript 的一个超集（如果一个集合S2中的每一个元素都在集合S1中，且集合S1中可能包含S2中没有的元素，则集合S1就是S2的一个超集），主要提供了类型系统和对 ES6 的支持<br>
+可以在编译阶段就发现大部分错误，比在运行时候出错好</p>
+</blockquote>
+<p>熟悉<code>javascript</code>的类型相关后，可以基于其学习 ts对其变量类型的定义规则<br>
+例子：</p>
+<ul>
+<li>举例</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isDone: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> createdByNewBoolean: <span class="built_in">boolean</span> = <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="number">1</span>); <span class="comment">// 错误，属于对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> notANumber: <span class="built_in">number</span> = <span class="literal">NaN</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> infinityNumber: <span class="built_in">number</span> = <span class="literal">Infinity</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> binaryLiteral: <span class="built_in">number</span> = <span class="number">0b1010</span>; =&gt; <span class="keyword">var</span> binaryLiteral = <span class="number">10</span>; <span class="comment">// 二级制编译成十进制</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> octalLiteral: <span class="built_in">number</span> = <span class="number">0o744</span>; =&gt; <span class="keyword">var</span> octalLiteral = <span class="number">484</span>; <span class="comment">// 八进制编译成 十进制</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内置对象</span></span><br><span class="line"><span class="keyword">let</span> b: <span class="built_in">Boolean</span> = <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">let</span> e: <span class="built_in">Error</span> = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Error occurred'</span>);</span><br><span class="line"><span class="keyword">let</span> d: <span class="built_in">Date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">let</span> r: <span class="built_in">RegExp</span> = <span class="regexp">/[a-z]/</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// DOM 和 BOM  Document、HTMLElement、Event、NodeList</span></span><br><span class="line"><span class="keyword">let</span> body: HTMLElement = <span class="built_in">document</span>.body;</span><br><span class="line"><span class="keyword">let</span> allDiv: NodeList = <span class="built_in">document</span>.querySelectorAll(<span class="string">'div'</span>);</span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e: MouseEvent</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Do something</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不同点：<br>
+ts 新增了很多对类型的控制，它更像是一种代码类型规范约束手段或者说代码检查的工具。</li>
+</ul>
+<p>比如 <code>void</code>， <code>接口（Interfaces)</code> <code>类型断言</code> <code>联合类型</code> <code>字符串字面量类型</code>,<code>元组</code>，<code>枚举（Enum）类型</code> <code>类的public、private 和 protected的定义</code>等</p>
+<p>PS: 初识typescript: 个人对 <code>typescript</code>的思考： 首先代码类型检查是一个很好的习惯, 平时在开发中应当多注意类型的判断，否则很有可能在一些公共组件中会有因为类型错误而无法运行出错的情况。但是因为只是静态类型的检测，因此还是避免不了一些类型错误，比如运行时。因此，个人感觉单靠typescript是无法解决所有类型变量出问题而出现Bug的情况。另外，代码的易读性会有所降低，重构成本和维护成本也会比较大。但是代码质量，特别是在团队合作时更能有保证。</p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/04/19/hoisting/" data-toggle="tooltip" data-placement="top" title="提升和它背后的机制">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/04/18/crossOrign/" data-toggle="tooltip" data-placement="top" title="跨域">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                          <a class="tag" href="/tags/#数据类型" title="数据类型">数据类型</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

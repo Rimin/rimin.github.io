@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>深入理解JS对象和原型链 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                            
+                              <a class="tag" href="/tags/#原型链" title="原型链">原型链</a>
+                            
+                        </div>
+                        <h1>深入理解JS对象和原型链</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-04-21
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>什么是对象？</p>
+<blockquote>
+<p>对象是一组没有特定属性的值，对象的每一个属性或方法都有一个名字，而每一个名字都映射到一个值，其中值可以是数据或函数。每一个对象都是基于一个引用类型创建的，这个引用类型可以是原生类型，也可以是开发人员自定义的类型。</p>
+</blockquote>
+<blockquote>
+<p>JavaScript中，一切都是对象，函数也是对象，数组也是对象，但是数组是对象的子集，而对于函数来说，函数与对象之间有一种“鸡生蛋蛋生鸡”的关</p>
+</blockquote>
+<blockquote>
+<p>所有的对象都是由Object继承而来，而Object对象却是一个函数。对象都是由函数来创建的。</p>
+</blockquote>
+<p>比如，在控制台中<br>
+输入 typeof Object  结果是&quot;function&quot;，</p>
+<p>输入 typeof Function 结果还是&quot;function&quot;</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/1.png?raw=true" alt="Alt 调试结果"></p>
+<p>虽然 JS 的对象和函数的关系看起来有点迷，但是也有自己的一套体系。</p>
+<h4><span id="从创建对象来看"> 从创建对象来看</span></h4>
+<p>JS 创建对象有很多方式，在这里不一一列出，可以看一种原型方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;<span class="comment">//构造函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.name = <span class="string">"Nicholas"</span>;<span class="comment">//添加原型属性</span></span><br><span class="line">Person.prototype.age = <span class="number">29</span>;</span><br><span class="line">Person.prototype.job = <span class="string">"software Engineer"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">//添加原型方法</span></span><br><span class="line">   <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(); <span class="comment">//实例化</span></span><br><span class="line">person1.sayName(); <span class="comment">//“Nicholas”</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(); <span class="comment">//实例化</span></span><br><span class="line">person2.sayName();<span class="comment">//"Nicholas"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们创建的每个函数都有一个<code>prototype</code>(原型)属性，这个属性是一个指针，指向一个对象，(属性值是对象)而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。：<code>prototype</code> 通过 调用构造函数而创建的那个对象的原型对象。使用原型的好处可以让所有对象实例共享它所包含的属性和方法。也就是说，不必在构造函数中定义对象信息，而是可以直接将这些信息 添加到原型中。</p>
+</blockquote>
+<p>上面的代码用图来反映：</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/2.png?raw=true" alt="Alt 调试结果"><br>
+<img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/3.png?raw=true" alt="Alt 调试结果"></p>
+<h4><span id="对于prototype"> 对于[[Prototype]]</span></h4>
+<p>每一个对象都有一个这样的隐藏属性，它引用了创建这个对象的函数的prototype原型对象，我们来看一张图：<br>
+<img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/4.png?raw=true" alt="Alt 调试结果"></p>
+<p>注意：函数也是对象，自然它也有__proto__。<br>
+在控制台中，我们发现：</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/5.png?raw=true" alt="Alt 调试结果"></p>
+<p>⚠️⚠️ 这个指针没有标准的方法访问，IE 浏览器在脚本访问[[Prototype]]会不能识别，火狐和谷歌浏览器及其他某些浏览器均能识别。虽然可以输出，但无法获取内部信息。（[[Prototype]] 也可写为__proto__）虽然无法访问到，但是可以通过: Object.isPrototypeOf(person1)判断这个实例对象是否指向它的原型对象 ;而我们也知道Person.prototype就是Object类型，即一个原型对象.</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//承接上面的代码</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Person</span>.</span></span>prototype.is<span class="constructor">PrototypeOf(<span class="params">person1</span>)</span>;<span class="comment">//true</span></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">Person</span>.</span></span>prototype.is<span class="constructor">PrototypeOf(<span class="params">person2</span>)</span>;<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>上面已经初略借助对象的创建来了解了原型链相关。接下来进行更深一步的探索。</p>
+<h4><span id="原型创建对象机制"> 原型创建对象机制</span></h4>
+<p>通过原型模式创建对象，我们接触到了对象创建的机制，如图：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o1 = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line"><span class="keyword">var</span> o2 = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/6.png?raw=true" alt="Alt 调试结果"></p>
+<p>接下来，再看另一种构造函数创造机制：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span></span>() &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> <span class="type">foo</span>()</span><br><span class="line"><span class="keyword">var</span> f2 = <span class="keyword">new</span> <span class="type">foo</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/7.png?raw=true" alt="image"></p>
+<p>由于一切对象（除Object.prototype）都继承自Object,所以不难理解这里最大的boss是Object.prototype,而构造它的原型对象是null，这不是证明了它就是最大的boss吗？然而，并没有那么简单，那么，function()又是怎么回事呢？继续看：</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/8.png?raw=true" alt="image"></p>
+<p>我们知道，一切函数都是Function的实例，而参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="noopener">点击这里</a> ，我们发现：</p>
+<blockquote>
+<p>Function 构造函数 创建一个新的Function对象。 在 JavaScript 中,<br>
+每个函数实际上都是一个Function对象。</p>
+</blockquote>
+<blockquote>
+<p>全局的Function对象没有自己的属性和方法, 但是, 因为它本身也是函数，所以它也会通过原型链从Function.prototype上继承部分属性和方法。</p>
+</blockquote>
+<p>这句话“Function从Function.prototype上继承部分属性和方法”，可以解释</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">Function</span>.</span><span class="module"><span class="identifier">__proto__</span>=</span></span>=<span class="module-access"><span class="module"><span class="identifier">Function</span>.</span></span>prototype</span><br></pre></td></tr></table></figure>
+<p>即可以说函数是由Function创建的，那么Function由自身创建，所以Function.__proto__就指向了创建它的函数（也就是自己）的prototype。</p>
+<p>最后，再来一张总的图：</p>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/9.png?raw=true" alt="image"></p>
+<p>通过这张图我们就可以轻松知道：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype <span class="comment">// []</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.__proto__ <span class="comment">// Object</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__ <span class="comment">// null</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.__proto__ <span class="comment">// function ()&#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.__proto__ <span class="comment">// function ()&#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.__proto__  <span class="comment">// Object</span></span><br></pre></td></tr></table></figure>
+<p>函数与对象的关系，看来，最大的boss还是Object.prototype，因为从箭头的进出来看，Object.prototype是没有被谁创造出来的，而其他对象均可以找到创建它的原型对象。</p>
+<h4><span id="原型链上的属性和方法"> 原型链上的属性和方法</span></h4>
+<h5><span id="instanceof-判断原型和实例之间的关系"> instanceof 判断原型和实例之间的关系</span></h5>
+<blockquote>
+<p>对于 A instanceof B来说，它的判断规则是：沿着A的__proto__这条线来找，同时沿着B的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 手动实现 instanceof</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断 obj1 是否 继承自obj2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isInstance</span>(<span class="params">obj1, obj2</span>)</span>&#123;</span><br><span class="line">   _pro = obj1.__proto__;</span><br><span class="line">   pro = obj2.prototype;</span><br><span class="line">   <span class="keyword">while</span>(pro)&#123;</span><br><span class="line">      <span class="keyword">if</span>(_pro === pro) &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      _pro = _pro.__proto__;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>⚠️ typeof和instanceof的区别：</p>
+<ul>
+<li>typeof:会返回一个变量的基本类型，只有以下几种: <code>number</code> ,<code>boolean</code>,<code>string</code>,<code>object</code>,<code>undefined</code>,<code>function</code>,但是typeof在判断到引用类型的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是new Number等等。在 <a href="https://rimin.github.io/2019/04/18/dataType/">JS数据类型</a> 中介绍了好几种方法对更细致的数据类型进行判断</li>
+<li>instanceof 判断原型和实例之间的关系</li>
+</ul>
+<h5><span id="原型链上的属性设置与屏蔽"> 原型链上的属性设置与屏蔽</span></h5>
+<p>我们已经知道原型链的搜索机制，那么假如我们人为地利用原型链改变对象之前的继承，即手动搭建原型链，会出现什么结果呢？</p>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">Sup.prototype.fn1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sec</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.b = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">Sec.protoype = <span class="keyword">new</span> Sup();<span class="comment">//继承了Sup()</span></span><br><span class="line"><span class="built_in">console</span>.log(Sec.protoype.fn1);</span><br><span class="line">Sec.prototype.fn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">Sec.prototype.fn1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Sec();</span><br><span class="line"><span class="built_in">console</span>.log(instance.fn1);</span><br></pre></td></tr></table></figure>
+<p>实际上， 不管有没有改变其原来的继承，重写都会屏蔽,可以看这个例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.a = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  Sup.prototype.fn1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">Sec</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.b = <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  Sec.prototype = <span class="keyword">new</span> Sup();</span><br><span class="line">  Sec.prototype.fn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  Sec.prototype.a = <span class="number">4</span>;</span><br><span class="line">  <span class="keyword">var</span> instance = <span class="keyword">new</span> Sec();</span><br><span class="line">  instance.c = <span class="number">3</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(instance);</span><br></pre></td></tr></table></figure>
+<p>这里要注意的是，在添加属性时，原型链仍有一定的搜索机制，而不是直接添加：</p>
+<ul>
+<li>如果属性c不是直接存于instance上，[[Prototype]]链就会被遍历，如果[[Prototype]]链上找不到c，c这时就会被直接添加到instance上。</li>
+<li>然而，如果这时属性a存在于原型链上层而不存在于instance中，赋值语句instance.a = 4却不会修改到Sec.prototype中的a，而是直接把a作为一个新属性添加到了instance上<br>
+那么为什么在添加或修改时最终都是添加到是实例中，为何还要搜索，是因为可能存在着三种情况：</li>
+</ul>
+<p>先来看一下代码（顺便我们转换一下思维，之前都是有构造函数后绑定原型.prototype，现在是有实例对象后绑定原型对象 .<strong>proto</strong>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parentObject = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> childObject = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">childObject.__proto__ = parentObject;</span><br><span class="line"></span><br><span class="line">childObject.c = <span class="number">3</span>;</span><br><span class="line">childObject.a = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(parentObject); <span class="comment">// Object &#123;a: 1, b: 2&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(childObject); <span class="comment">// &gt; Object &#123;c: 3, a: 2&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parentObject = &#123;&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(parentObject, <span class="string">"a"</span>, &#123;</span><br><span class="line">  value: <span class="number">2</span>,</span><br><span class="line">  writable: <span class="literal">false</span>, <span class="comment">// 标记为不可写</span></span><br><span class="line">  enumerable: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> childObject = &#123;</span><br><span class="line">  b: <span class="number">3</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">childObject.__proto__ = parentObject; <span class="comment">// 绑定原型</span></span><br><span class="line">childObject.a = <span class="number">10</span>; <span class="comment">//试图改变</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(childObject.a);  <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(childObject);  <span class="comment">// &gt; Object &#123;b: 3&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(parentObject); <span class="comment">// Object &#123;a: 2&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parentObject = &#123;</span><br><span class="line">   <span class="keyword">set</span> a(val) &#123;</span><br><span class="line">      <span class="keyword">this</span>.aaaaaa = val * <span class="number">2</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> childObject = &#123;</span><br><span class="line">  b: <span class="number">3</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">childObject.__proto__ = parentObject;</span><br><span class="line">childObject.a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(childObject); <span class="comment">// ?</span></span><br><span class="line"><span class="built_in">console</span>.log(parentObject); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+<p>结果是：<br>
+<img src="https://github.com/Rimin/rimin.github.io/blob/master/img/object/10.png?raw=true" alt="image"></p>
+<p>发现，10被当成参数传进原型对象中，而实例对象则得到对应的aaaaaa，这又该怎么解释呢？</p>
+<p>这就要了解一下set 函数了，这个<code>set</code>函数的运行机制就是如此。</p>
+<p>所以就有这三种情况</p>
+<ol>
+<li>如果在[[Prototype]]链上层存在名为a的普通数据访问属性，并且没有被标记为只读(writable: false)，那就会直接在childObject中添加一个名为a的新属性，它是屏蔽属性，这个情况就是上文例子中发生的情况。</li>
+<li>如果在[[Prototype]]链上层存在a，但它被标记为只读(writable: false)，那么无法修改已有属性或者在childObject上创建屏蔽属性，严格模式下执行这个操作还会抛出错误。</li>
+<li>如果在[[Prototype]]链上层存在a，但它被标记为只读(writable: false)，那么无法修改已有属性或者在childObject上创建屏蔽属性，严格模式下执行这个操作还会抛出错误。</li>
+</ol>
+<p>如此一来，其添加或重写属性时就仍要按原型链搜索。</p>
+<h5><span id="原型链上的constructot属性"> 原型链上的constructot属性</span></h5>
+<blockquote>
+<p>constructor属性指向prototype属性所在函数</p>
+</blockquote>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'dog'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.constructor === Foo; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo(); </span><br><span class="line">a.constructor === Foo; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>当a.constructor === Foo的时候，其实这时候并不能够说明a是由Foo构造而成的。实际上，a.constructor的引用是被委托给了Foo.prototype（本身a自身是没有这个属性的），所以才会出现等价的情况，而并不能说明<code>a</code>是由<code>Foo</code>构造而成的。</p>
+<p>再看下面的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'dog'</span>;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype = &#123; <span class="comment">// 字面量方法</span></span><br><span class="line">  h: <span class="string">'hhh'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a1 = <span class="keyword">new</span> Foo();</span><br><span class="line"></span><br><span class="line">a1.constructor === Foo; <span class="comment">// false</span></span><br><span class="line">a1.constructor === <span class="built_in">Object</span>; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">a1 <span class="keyword">instanceof</span> Foo; <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>这里由于Foo.prototype的默认属性被清空了，所以<code>constructor</code>不存在，可是<code>__proto__</code>构成的原型链是不变的，所以<code>a1.constructor</code>的引用被委托到<code>Object.prototype.constructor</code>，所以第一个返回false，第二个返回true。</p>
+<p>constructor作为原型链中的一环，会影响原型链的指向，但是它只是一个默认的属性，而且因为原型链是一个松散连接的结构，constructor并不安全。</p>
+<h5><span id="对new操作符的认识"> 对new操作符的认识</span></h5>
+<p>当执行new操作符时</p>
+<ol>
+<li>创建一个全新的空对象</li>
+<li>这个新对象会被执行[[prototype]]连接，使其沿着原型链依次继承各级原型对象的属性。</li>
+<li>这个新对象会绑定到函数调用的<code>this</code>。</li>
+<li>如果函数没有返回其他对象，那么<code>new</code>表达式中的函数调用会自动返回这个新对象。</li>
+</ol>
+<p>将以上步骤拆解对比：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>) </span>&#123; <span class="comment">// 定义了一个超类，供下面的子类继承</span></span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 定义了子类1，继承了超类，无返回值</span></span><br><span class="line">    SuperType.call(<span class="keyword">this</span>, <span class="string">"Cong1"</span>);</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">29</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType2</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 定义了子类2，继承了超类，返回了一个引用类型的值</span></span><br><span class="line">    SuperType.call(<span class="keyword">this</span>, <span class="string">"Cong2"</span>);</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">29</span>;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">a</span>: <span class="number">2</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType3</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 定义了子类3，继承了超类，返回了一个值类型的值</span></span><br><span class="line">    SuperType.call(<span class="keyword">this</span>, <span class="string">"Cong3"</span>);</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">29</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 下面比较有new操作符和无new操作符调用子类的区别 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instance1_nonew = SubType();</span><br><span class="line"><span class="keyword">var</span> instance2_nonew  = SubType2();</span><br><span class="line"><span class="keyword">var</span> instance3_nonew = SubType3();</span><br><span class="line"><span class="keyword">var</span> instance1_hasnew = <span class="keyword">new</span> SubType();</span><br><span class="line"><span class="keyword">var</span> instance2_hasnew = <span class="keyword">new</span> SubType2();</span><br><span class="line"><span class="keyword">var</span> instance3_hasnew = <span class="keyword">new</span> SubType3();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 依次打印六个变量</span></span><br><span class="line"><span class="built_in">console</span>.log(…);</span><br></pre></td></tr></table></figure>
+<p>得到的结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">instance1_nonew</span><br><span class="line"><span class="literal">undefined</span></span><br><span class="line">instance2_nonew</span><br><span class="line">&gt; <span class="built_in">Object</span> &#123;<span class="attr">a</span>: <span class="number">2</span>&#125;</span><br><span class="line">instance3_nonew</span><br><span class="line"><span class="number">3</span></span><br><span class="line">instance1_hasnew</span><br><span class="line">&gt; SubType &#123;<span class="attr">name</span>: <span class="string">"Cong1"</span>, <span class="attr">age</span>: <span class="number">29</span>&#125;</span><br><span class="line">instance2_hasnew</span><br><span class="line">&gt; <span class="built_in">Object</span> &#123;<span class="attr">a</span>: <span class="number">2</span>&#125;</span><br><span class="line">instance3_hasnew</span><br><span class="line">&gt; SubType3 &#123;<span class="attr">name</span>: <span class="string">"Cong3"</span>, <span class="attr">age</span>: <span class="number">29</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，从得到的结果来看，前三种情况很容易想到，因为只是将构造函数赋给另一个变量而已，当然得到它的返回值，而第四种情况也较常见，但是最后两种情况比较少见，总结一下：</p>
+<ol>
+<li>首先新建一个对象：<br>
+var instance = new Object()</li>
+<li>给这个对象设置[[prototype]]链： instance.<strong>proto</strong> = SubType.prototype</li>
+<li>绑定this，将SubType中的this指向instance，执行SubType中的语句进行赋值。</li>
+<li>返回值，这里要根据SubType的返回类型来判断：</li>
+</ol>
+<ul>
+<li>如果是一个引用类型（对象），那么就替换掉instance本身的这个对象。（如：instance2_hasnew）</li>
+<li>如果是值类型，那么直接丢弃它，返回instance对象本身。（如：instance3_hasnew）</li>
+</ul>
+<p>（不过很少有在构造函数直接返回值的情况）</p>
+<ul>
+<li>手动实现 new 操作：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">newOperation</span>(<span class="params">SubType</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> instance = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">   instance.__proto_ = SubType.prototype;</span><br><span class="line">   <span class="keyword">let</span> res =  SubType.call(instance)</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">typeof</span> res === <span class="string">"object"</span> ? res : instance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>jquery之无<code>new</code>构建</li>
+</ul>
+<ol>
+<li>最基本的创建对象的做法</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jQuery.prototype = &#123;</span><br><span class="line">   version: <span class="string">'1.1.1'</span>,</span><br><span class="line">   name: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.version);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> jQuery();</span><br><span class="line"></span><br><span class="line">a.name(); <span class="comment">// "1.1.1"</span></span><br></pre></td></tr></table></figure>
+<p>但是，jquery 是没有 new 操作符的，那么如何不用 new 操作符呢？<br>
+我们可能会想到这么做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> jQuery(selector, context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jQuery.prototype = &#123;</span><br><span class="line">   name: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// name方法</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">jQuery();</span><br></pre></td></tr></table></figure>
+<p>然而，这里出现了死循环。</p>
+<p>接下来，我们可能会这么做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span> (<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> jQuery.prototype.init(selector, context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jQuery.prototype = &#123;</span><br><span class="line">   <span class="keyword">constructor</span>: jQuery,</span><br><span class="line">   init: function(selector, context) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">   &#125;,</span><br><span class="line">   name: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"name调用"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，这里JQuery.xxx会出错，因为明显所 new 的 jQuery.prototype.init中返回的this的指向已经被隐式修改。</p>
+<p>所以，我们需要这么做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span> (<span class="params">selector, context</span>) </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> jQuery.prototype.init(selector, context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jQuery.fn = jQuery.prototype = &#123;</span><br><span class="line">   <span class="keyword">constructor</span>: jQuery,</span><br><span class="line">   init: function(selector, context) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">   &#125;,</span><br><span class="line">   name: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"name调用"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">jQuery.fn.init.prototype = jQuery.prototype;</span><br><span class="line"></span><br><span class="line">jQuery().name(); <span class="comment">//  name调用</span></span><br></pre></td></tr></table></figure>
+<p>其实我们把JQuery的 constrctor 和 prototype 都做了手动的控制，让它“伪造”成一个被我们自己new 出来的对象。</p>
+<p>以上就是JS原型链和原型链的主要内容。</p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/04/22/call,apply,bind/" data-toggle="tooltip" data-placement="top" title="自行实现call apply bind">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/04/19/hoisting/" data-toggle="tooltip" data-placement="top" title="提升和它背后的机制">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                          <a class="tag" href="/tags/#原型链" title="原型链">原型链</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

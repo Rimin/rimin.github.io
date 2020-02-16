@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>站在2019看前端 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#发展" title="发展">发展</a>
+                            
+                              <a class="tag" href="/tags/#历史" title="历史">历史</a>
+                            
+                              <a class="tag" href="/tags/#思考" title="思考">思考</a>
+                            
+                        </div>
+                        <h1>站在2019看前端</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-03-03
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>虽然接触前端不到两年的时间，但是在这不到两年的时间，感受到前端发生了很大的变化，印象中，在 2017 年 <code>大前端</code>这个词才刚刚“衍生孵化”，而经过短短不到两年的发展，<code>大前端</code>真正迎来它的繁盛时刻，<code>Node</code>将触角伸向后端，<code>npm</code>带来各种可用的完备而成熟的库， <code>小程序</code>,<code>PWA</code>, <code>React Native</code>又将触角伸向移动端，甚至像 <code>Electron</code>又把触角伸向pc桌面应用。前端逐渐变成“大前端”，也就是变成了全栈。实际上，由于前端相比于其他技术岗位，确实比较新，发展的速度十分快，触角也越伸越广。</p>
+<p>可以先回顾一下前端前期的发展史：</p>
+<h4><span id="1-拓荒-1990-1994"> 1. 拓荒 1990 - 1994</span></h4>
+<ul>
+<li>
+<p>1990年 Tim Berers-Lee 在NeXT上发明了第一个浏览器</p>
+</li>
+<li>
+<p>1993年 CGI 出现，人们可以在后端动态生成页面</p>
+</li>
+<li>
+<p>1994年 网景公司推出第一款商业浏览器navigator。 微软推出IE。 同年，PHP诞生，PHP将动态内容嵌入HTML中， 其性能比一般的CGI高。深刻的影响了后来的ASP,JSP。 乃至后来的JavaScript前端模板引擎。同年，W3C小组成立。</p>
+</li>
+<li>
+<p>1995年  JavaScript诞生，传说JavaScript是在很短的时间内设计出来的，因此存在很多瑕疵。因此一直被嫌弃。<br>
+JavaScript 主要的语言特征：</p>
+<pre><code> 1）借鉴C语言的基本语法
+ 2）借鉴Java 语言的数据类型和内存管理；
+ 3）借鉴Scheme 语言，将函数提升到“第一公民”的地位。
+ 4）借鉴Self语言， 使用基于原型的继承机制
+</code></pre>
+</li>
+</ul>
+<p>但是当时的JS还非常“空洞”，没有包管理机制，没有辅助SDK,内置方法屈指可数。因此，后面的主要任务就是完善和提高性能。</p>
+<h4><span id="2-浏览器之争-1995年-2005年"> 2. 浏览器之争 1995年 - 2005年</span></h4>
+<p>主要有以下这三个浏览器地位争夺</p>
+<ul>
+<li>IE vs 网景</li>
+<li>IE vs 火狐浏览器</li>
+<li>IE vs 谷歌浏览器</li>
+</ul>
+<p>第一次我们知道是 微软胜了，并且微软由于没有按照当时已有的ECMA-262 的规范来实现，也就使得前端兼容问题的诞生。</p>
+<h4><span id="3-prototype时期-2005年-2009年"> 3. Prototype时期 2005年 - 2009年</span></h4>
+<p>prototype 是一个Sam Stephenson 写的一个非常优雅的javascript 基础类库，他是Ruby的大牛，因此prototype 的许多方法名都是来自Ruby界。<br>
+同时Prototype还解决了动画特效和Ajax请求。</p>
+<h4><span id="4-jquery时期-2009年-2012年"> 4. jQuery时期 2009年 - 2012年</span></h4>
+<p>jQuery打破了前端开发者的编程思维，之前是按后端的开发思路来的，做一个业务就封装一个类，有了这一个类，再想办法传入dom。而jQuery是以dom为中心，开发者可以选一个或多个dom, 变成jQuery对象。进行链式调用。其次，开发者已经开始注意前后端分离。</p>
+<h4><span id="5-后jquery时期-2012年-2016年"> 5. 后jQuery时期 2012年 - 2016年</span></h4>
+<p>这一时期以RequireJs诞生为起点，以RN的出现结束。<br>
+虽然jQuery的出现让前端开发更加轻松，但是出现了以下几个问题：</p>
+<pre><code>    1） 一个页面通常会引入十多个乃至几十个script标签。阻塞页面渲染。导致白屏。
+
+    2） 全局污染，于是衍生了各种模式规范；AMD,CMD。
+</code></pre>
+<p>同时段，NodeJS, Angular, 各种构建工具都出现了。前端开发者也开始出现了分化，有些人转向了后端，有些人开始专门搞工程化。</p>
+<h4><span id="6-三大框架割据时代及移动时代-2016年-至今"> 6. 三大框架割据时代及移动时代 2016年 - 至今</span></h4>
+<p>这期间： React, Angular, Vue 从PC到移动端 RN, inoc, weex， 而像前后端同构，TypeScript 也出现了，前端被越玩越“溜”，越来越自动化，越来越“高大上”。同时，可以发现，像小程序， Flutter等的出现，也预示着移动时代的到来，而PC的作用被渐渐局限在 一些To B应用以及可视化系统中。同时，今年 serveless这种开发模式衍生，前端的开发模式也在发生着一些变革，而开发模式的变革又意味着代码的重写，重构。</p>
+<p>所以，到现在，前端的方向到底在哪里？ 首先是我意识到的几个问题：</p>
+<ol>
+<li>触角越伸越广，很容易让前端开发者出现泛而不精的情况，这也是事物发展太快而使得人心浮躁的现象。再者，我认为可能会出现分久比合合就必分的趋势，前端开发会渐渐出现分化，最后还是回到原本的后端，移动端，前端分工的局面，而且其实大公司会更希望招专才。</li>
+<li>前端原本的职责在于 呈现，交互。当然，现在各种各样的框架，“高科技”，实际上已经让前端的开发和性能比几年前都提高了很多，而且工程化生产也比之前，例如jquery时代成熟很多。并且有时候会发现，前端再怎么去优化，都没有服务端的优化来得有效。所以，现在的前端开发面临的问题在于，价值在哪里？普通的前端开发者害怕自己的技术变得局限，所以不断地将自己的价值拓展到其他端。是否脱离了原本的职责定位？</li>
+<li>普通需求重复而没有提升点。这其实也是很多开发者面临的问题，上手一个框架其实很容易，而深入其底层可能也是时间问题，但是需求往往是多而重复的，很有可能会出现需求越写越多，BUG越写越多，于是一直在写BUG， 当然技术的迭代也很快，很容易陷入一个问题在于：一直在学习一直在担心被淘汰，一直在写需求，BUG也越写越多，也一直在重复造轮子,“搬砖”。（当然，好处在于可以从中获得一些框架设计思想，解决问题的能力，以及对一门语言的精通程度，毕竟我发现很多面试题很容易看了又忘，而且理解不够深入，但是假如有遇到过实践过的话，就能记得很牢固。而这也是目前我认为的区分一个初级还是高级的开发者的点。当然这和从事时间无关，而和是否会总结，归纳，刻意训练有关。）</li>
+</ol>
+<p>而今年在一些文章看对前端的展望，我发现稍稍有些不一样。</p>
+<p>例如这篇文章中的解读：<br>
+<a href="https://mp.weixin.qq.com/s/9ZPhaGuCnY2j49pCBetE9Q" target="_blank" rel="noopener">10 余年前端老兵亲述：前端的未来在哪里？| 技术头条</a></p>
+<blockquote>
+<p>前端为应用而生，人机交互技术是我们的生存之本，以应用为桥连接用户和数字世界是我们的使命。但长期以来前端的生存空间被压缩在 Web 领域，Digital Twin 这种新形态无疑将为我们打开一片新天地。Gartner 这份报告中还有两项技术和前端紧密相关：<br>
+Immersive Technologies（沉浸式技术）：Augmented Reality(AR)、Virtual Reality(VR)、Mixed Reality(MR) 等, Smart Spaces：智慧城市、智能汽车、智能商店等。看到未来有三项战略性技术居然和前端有关，着实让人兴奋不已。不过莫急，既然是战略，也就意味着三五年内未必能开花结果。</p>
+</blockquote>
+<blockquote>
+<p>在当下可实践的新技术中，前端相关的有：AI、Serverless/FaaS、Blockchain、IoT、AR/VR/MR、智能硬件、可视化应用开发。 这些新技术的关键路径和核心技术多数都不在前端，但我们能以使用者的身份参与进去，结合业务特点进行实践，让现有研发工作做得更好，让应用的交互体验更好。</p>
+</blockquote>
+<p>在知乎，也出现了诸如这样的文章：<br>
+<a href="https://zhuanlan.zhihu.com/p/41109805" target="_blank" rel="noopener">了解前端 +机器学习</a>， <a href="https://zhuanlan.zhihu.com/p/31433755" target="_blank" rel="noopener">精读《30行js代码创建神经网络》</a>，<a href="https://zhuanlan.zhihu.com/p/47555659" target="_blank" rel="noopener">前端与人工智能</a>。</p>
+<p>可以看到，实际上，前端仍在不断地开拓领域，例如AI，寻找自身的价值所在，这是好事，同时难度也在不断地增加，需要学习的内容也在不断增加。</p>
+<p>所以，这时候个人在这样的大平台下， 选择也变得越来越多，但是如何选择适合自己的一条道路，能否让自己得到更好的成长，在这个行业发挥个人的价值，就要回归到个人本身了。</p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/03/04/browser/" data-toggle="tooltip" data-placement="top" title="浏览器内部机制">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/03/01/fistPage/" data-toggle="tooltip" data-placement="top" title="开博第一篇">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#发展" title="发展">发展</a>
+                        
+                          <a class="tag" href="/tags/#历史" title="历史">历史</a>
+                        
+                          <a class="tag" href="/tags/#思考" title="思考">思考</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

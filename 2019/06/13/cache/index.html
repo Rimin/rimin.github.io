@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="undefined">
+    <meta name="baidu-site-verification" content="aifbHeRmzy">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="rimin, rimin Blog, Rimin的博客, Rimin, html, css, javascript, js, JavaScript, Node">
+    <title>HTTP 缓存机制 - Rimin的博客 | Rimin&#39;s Blog</title>
+    <!-- Web App Manifest -->
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rimin.github.io">
+
+    <link rel="manifest" href="/pwa/manifest.json">
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+  
+    <!-- Safari Webpage Icon    by-HJB -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <!-- Bootstrap Core CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+  
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/css/hux-blog.min.css">
+  
+      <!-- Pygments Github CSS -->
+      <link rel="stylesheet" href="/css/highlight.css">
+
+      <link rel="stylesheet" href="/css/rocket.css">
+
+      <link rel="stylesheet" href="/css/signature.css">
+  
+      <link rel="stylesheet" href="/css/toc.css">
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+    <!-- hack iOS CSS :active style -->
+    <body ontouchstart="">
+        <!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/home-bg.jpg')
+            /*post*/
+        
+    }
+</style>
+
+<link rel="stylesheet" href="/css/post-style.css">
+
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#HTTP" title="HTTP">HTTP</a>
+                            
+                              <a class="tag" href="/tags/#网络" title="网络">网络</a>
+                            
+                              <a class="tag" href="/tags/#缓存" title="缓存">缓存</a>
+                            
+                        </div>
+                        <h1>HTTP 缓存机制</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Rimin on
+                            2019-06-13
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+        <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Rimin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <!-- <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" name="content" class="form-control" placeholder="Search">
+                    </div>
+                </form> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+        <!-- Main Content -->
+        
+<!-- Image to hack wechat -->
+<!-- <img src="https://rimin.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>在整个大的应用体系中，缓存是节省流量，快捷高效的一环。</p>
+<h4><span id="缓存的分类"> 缓存的分类</span></h4>
+<ul>
+<li>源服务端缓存：比如 Nginx、Apache</li>
+<li>网络中缓存： 代理服务器缓存(共享缓存), 反向代理服务器缓存（网关缓存负载均衡, CDN）</li>
+<li>浏览器缓存：HTTP 缓存、indexDB、cookie、localstorage 等等</li>
+</ul>
+<h4><span id="优点amp缺点"> 优点&amp;缺点</span></h4>
+<ul>
+<li>
+<p>使用缓存的优点：</p>
+<ul>
+<li>请求更快</li>
+<li>节省带宽</li>
+<li>降低服务器压力</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>网站管理员特别希望知道网站的一举一动，比方说多少人访问，访问时间，而缓存会“隐藏”他们的用户，他们就无从得知到底谁访问了这个站点<br>
+（解决方法之一：可以选择页面上的一个小元素(或页面本身)，然后给这个元素一个适当的头信息使它是不可缓存。比如，你可以在每一个页面上引用一个1像素×1像素的不可缓存（如scr地址后面加个随机数Add）的透明图片。Referer头信息将会包含调用它的页面信息。即使这样也不能给出你用户的精确统计，并且对通过互联网访问的用户也不是很友好：产生不必要的流量，并强迫用户等待未被缓存的内容从网络上下载回来）</li>
+<li>无法及时更新</li>
+</ul>
+</li>
+</ul>
+<h4><span id="http缓存机制"> http缓存机制</span></h4>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>消息包头</th>
+<th>值/示例</th>
+<th>类型</th>
+<th>作用</th>
+<th>缺点/局限/注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新鲜度</td>
+<td>Expires</td>
+<td>Mon, 15 Aug 2016 03:56:47 GMT</td>
+<td>response</td>
+<td>启用缓存和定义缓存时间。告诉浏览器资源缓存过期时间，如果还没过该时间点则不发请求</td>
+<td>(http1.0)该时间是相对服务器的，因此存在客户端和服务端时间上不一致的问题。</td>
+</tr>
+<tr>
+<td></td>
+<td>Cache-Control</td>
+<td>public</td>
+<td>response</td>
+<td>任何路径的缓存者（本地缓存、代理服务器）均可缓存</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>private</td>
+<td>response</td>
+<td>指示对于单个用户的整个或部分响应消息，不能被共享缓存处理。</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>no-cache</td>
+<td>response</td>
+<td>告诉浏览器忽略资源的缓存副本，强制每次请求直接发送给服务器，拉取资源，但不是“不缓存”</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>no-store</td>
+<td>response</td>
+<td>强制缓存在任何情况下都不要保留任何副本</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>max-age</td>
+<td>response</td>
+<td>指示客户机可以接收生存期不大于指定时间（以秒为单位）的响应。上次缓存时间（客户端的）+max-age（64200s）&lt;客户端当前时间</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>min-fresh</td>
+<td>response</td>
+<td>指示客户机可以接收响应时间小于当前时间加上指定时间的响应</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>max-stale</td>
+<td>response</td>
+<td>指示客户机可以接收超出超时期间的响应消息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Pragma</td>
+<td>no-cache</td>
+<td>response</td>
+<td></td>
+<td>http1.0中存在的字段，在http1.1已被抛弃，使用Cache-Control替代，但为了做http协议的向下兼容，很多网站依旧会带上这个字段</td>
+</tr>
+<tr>
+<td>校验值</td>
+<td>Last-Modified</td>
+<td>Mon, 15 Aug 2016 03:56:47 GMT</td>
+<td>response</td>
+<td>标示这个响应资源的最后修改时间</td>
+<td>只能精确到秒级，如果某些文件在1秒钟以内，被修改多次的话，它将不能准确标注文件的修改时间 。 如果某些文件会被定期生成，当有时内容并没有任何变化，但Last-Modified却改变了，导致文件没法使用缓存，有可能存在服务器没有准确获取文件修改时间，或者与代理服务器时间不一致等情形（无法使用缓存）可以使用ETag</td>
+</tr>
+<tr>
+<td></td>
+<td>If-Modified-Since</td>
+<td>Mon, 15 Aug 2016 03:56:47 GMT</td>
+<td>request</td>
+<td>当资源过期时（使用Cache-Control标识的max-age）,其值为上次响应头的Last-Modified值，再次向web服务器请求时带上头If-Modified-Since。web服务器收到请求后发现有头If-Modified-Since则与被请求资源的最后修改时间进行比对。若最后修改时间较新，说明资源又被改动过，则响应整片资源内容（写在响应消息包体内），包括更新Last-Modified的值，HTTP 200；若最后修改时间较旧，说明资源无新修改，则响应HTTP 304(无需包体，节省浏览)，告知浏览器继续使用所保存的cache</td>
+<td>要配合Cache-Control使用</td>
+</tr>
+<tr>
+<td></td>
+<td>Etag</td>
+<td>“fd56273325a2114818df4f29a628226d”</td>
+<td>response</td>
+<td>告诉浏览器当前资源在服务器的唯一标识（生成规则由服务器决定）如果有 Etag 字段，那么浏览器就会将本次缓存写入硬盘中,之后的缓存是<code>from disk cache</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>If-None-Match</td>
+<td>“fd56273325a2114818df4f29a628226d”</td>
+<td>request</td>
+<td>当资源过期时（使用Cache-Control标识的max-age），发现资源具有Etage声明，则再次向web服务器请求时带上头If-None-Match（Etag的值）。web服务器收到请求后发现有头If-None-Match 则与被请求资源的相应校验串进行比对，决定返回200或304。</td>
+<td>Etag/If-None-Match也要配合Cache-Control使用。需要注意的是分布式系统里多台机器间文件的last-modified必须保持一致，以免负载均衡到不同机器导致比对失败，Yahoo建议分布式系统尽量关闭掉Etag(每台机器生成的etag都会不一样，因为除了 last-modified、inode 也很难保持一致)。</td>
+</tr>
+</tbody>
+</table>
+<h4><span id="浏览器缓存机制"> 浏览器缓存机制</span></h4>
+<ol>
+<li>
+<p>分类：</p>
+<ul>
+<li><strong>强缓存</strong>： 浏览器在加载资源时，先根据这个资源的一些http header判断它是否命中强缓存，强缓存如果命中，浏览器直接从自己的缓存中读取资源，不会发请求到服务器。比如某个css文件，如果浏览器在加载它所在的网页时，这个css文件的缓存配置命中了强缓存，浏览器就直接从缓存中加载这个css，连请求都不会发送到网页所在服务器。</li>
+<li><strong>协商缓存</strong>： 当强缓存没有命中的时候，浏览器一定会发送一个请求到服务器，通过服务器端依据资源的另外一些http header验证这个资源是否命中协商缓存，如果协商缓存命中，服务器会将这个请求返回（304），但是不会返回这个资源的数据，而是告诉客户端可以直接从缓存中加载这个资源，于是浏览器就又会从自己的缓存中去加载这个资源；若未命中请求，则将资源返回客户端，并更新本地缓存数据（200）。</li>
+<li>强缓存与协商缓存<strong>区别</strong>：强缓存不发请求到服务器，协商缓存会发请求到服务器。</li>
+</ul>
+</li>
+<li>
+<p>设置缓存</p>
+</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;META <span class="attribute">HTTP-EQUIV</span>=<span class="string">"Pragma"</span> <span class="attribute">CONTENT</span>=<span class="string">"no-cache"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>但是 仅有IE才能识别这段meta标签含义，其它主流浏览器仅识别“Cache-Control: no-store”的meta标签。</p>
+<ol start="3">
+<li>
+<p>浏览器缓存位置</p>
+<ol>
+<li>Service Worker： 运行在浏览器背后的独立线程，一般可以用来实现缓存功能。使用 Service Worker的话，传输协议必须为 HTTPS</li>
+<li>Memory Cache （读取内存中的数据）</li>
+<li>Disk Cache</li>
+<li>Push Cache： 是 HTTP/2 中的内容，当以上三种缓存都没有命中时，它才会被使用。并且缓存时间也很短暂，只在会话（Session）中存在，一旦会话结束就被释放</li>
+<li>网络请求</li>
+</ol>
+</li>
+<li>
+<p>机制</p>
+</li>
+</ol>
+<ul>
+<li>第一次请求：</li>
+</ul>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/cache/1.png?raw=true" alt="image"></p>
+<ul>
+<li>再次发送请求时：</li>
+</ul>
+<p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/cache/2.png?raw=true" alt="image"></p>
+<h4><span id="相关问题"> 相关问题</span></h4>
+<ul>
+<li>我的图片缓存一个月后才到期，我现在就想变动怎么办？</li>
+</ul>
+<p>最有效的方法是<strong>修改链接</strong>，这样会从源服务器获取完整的新内容。请记住，调用图片的这个页面也会被缓存的，正因如此，我们需要让图片以及其他类似的静态资源易缓存，而页面呢可以随着自身的改变（例如改变了一个图片的URL地址Add）即时更新。</p>
+<p>大公司的静态资源优化方案，基本上要实现这么几个东西：</p>
+<ol>
+<li>配置超长时间的本地缓存 —— 节省带宽，提高性能</li>
+<li>采用内容摘要作为缓存更新依据 —— 精确的缓存控制（对于修改的静态文件，资源，改变它的url或者说文件名）</li>
+<li>静态资源CDN部署 —— 优化网络请求</li>
+<li>更新资源发布路径实现非覆盖式发布 —— 平滑升级（先部署页面，再部署资源还是先部署资源，再部署页面问题）</li>
+</ol>
+<p>我们可以将所有前端静态资源开启<strong>永久强缓存</strong>，每次版本发布都可以首先让静态资源全量上线，再进一步上线模板或者页面文件，再也不用担心各种缓存和时间间隙的问题了！</p>
+<ul>
+<li>
+<p>我的页面是密码保护的，代理缓存是怎么处理的？</p>
+</li>
+<li>
+<p>如果人们通过缓存访问我的网站，我应该担心安全吗？<br>
+（答： SSL页面不会被代理服务器缓存，所以这个你不需要担心。但是，代理服务器就好非SSL页面请求以及URL抓取这口，你懂的，这是不安全的。无良的管理员可能就会收集网站用户的信息，尤其在URL中）</p>
+</li>
+</ul>
+<p>参考：</p>
+<p><a href="https://segmentfault.com/a/1190000006741200#articleHeader3" target="_blank" rel="noopener">详解web缓存</a></p>
+<p><a href="https://my.oschina.net/leejun2005/blog/369148" target="_blank" rel="noopener">浏览器 HTTP 协议缓存机制详解</a></p>
+<p><a href="https://www.oschina.net/news/41397/web-cache-knowledge" target="_blank" rel="noopener">Web 开发人员需知的 Web 缓存知识</a></p>
+<p><a href="https://www.zhihu.com/question/20790576/answer/32602154?utm_campaign=webshare&amp;utm_source=weibo&amp;utm_medium=zhihu" target="_blank" rel="noopener">大公司里怎样开发和部署前端代码？</a></p>
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/06/15/node/" data-toggle="tooltip" data-placement="top" title="Node内部机制">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/06/13/http/" data-toggle="tooltip" data-placement="top" title="HTTP 概述">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!--Gitalk评论start  -->
+                
+                <!-- Gitalk end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#HTTP" title="HTTP">HTTP</a>
+                        
+                          <a class="tag" href="/tags/#网络" title="网络">网络</a>
+                        
+                          <a class="tag" href="/tags/#缓存" title="缓存">缓存</a>
+                        
+                    </div>
+                </section>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<div id="lv-container" data-id="city" data-uid="MTAyMC80NTEzOS8yMTY1Ng==" style="width: 28%; margin: 0 auto;">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+
+
+
+        <!-- Footer -->
+        <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+<!-- Service Worker -->
+
+    <script type="text/javascript">
+        if(navigator.serviceWorker){
+            // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+            navigator.serviceWorker
+                .register('/sw.js')
+                .then((registration) => {console.log('Service Worker Registered. ', registration)})
+                .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+        }
+    </script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://rimin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '2620e69674d25088f870bef114e8ff89';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+        <a id="rocket" href="#top" class=""></a>
+        <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+        <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+        <!-- Image to hack wechat -->
+        <img src="/img/apple-touch-icon.png" width="0" height="0" />
+         <!-- Migrate from head to bottom, no longer block render and still work -->
+    </body>
+</html>

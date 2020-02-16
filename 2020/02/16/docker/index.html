@@ -262,9 +262,22 @@
 <ol>
 <li>寻找镜像源（<a href="https://hub.docker.com/_/mysql?tab=tags" target="_blank" rel="noopener">镜像库地址</a>）及确定版本。<br>
 在</li>
-<li>执行以下操作：</li>
+<li>执行以下操作（5.7为版本号）：</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull mysql:<span class="number">5.7</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>查看本地镜像，就会发现：</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker images</span><br></pre></td></tr></table></figure>
+<p>镜像列表里已经有了 <code>mysql:5.7</code> 的镜像。<br>
+<img src="https://github.com/Rimin/rimin.github.io/blob/master/img/docker/4.png?raw=true" alt="image4"></p>
+<ol start="4">
+<li>使用：可以在宿主机器中直接登录（注意，前提是宿主机已经安装mysql及可执行mysql命令），宿主机器可以直接连接该数据库。</li>
+</ol>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> -p <span class="number">3306</span>:<span class="number">3306</span> mysql:<span class="number">5.7</span></span><br></pre></td></tr></table></figure>
+<p>接着：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  mysql -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>  -P <span class="number">3306</span> -u root -p</span><br></pre></td></tr></table></figure>
+<p>(注意 -h和 -P需要写全，否则可能会报错)</p>
 
 
                 <hr>

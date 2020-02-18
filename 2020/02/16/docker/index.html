@@ -278,6 +278,73 @@
 <p>接着：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  mysql -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>  -P <span class="number">3306</span> -u root -p</span><br></pre></td></tr></table></figure>
 <p>(注意 -h和 -P需要写全，否则可能会报错)</p>
+<h5><span id="构建node服务的相关镜像文件"> 构建Node服务的相关镜像文件</span></h5>
+<p>开始自己构建镜像，这里推荐直接使用VS Code 的插件docker，安装好之后接着 <code>command + shift + p</code> 使用<code>docker add</code> 后面就会自动创建docker 配置文件。</p>
+<p>如下，为Dockfile配置文件：<br>
+关于Dockerfile的配置项，可以参考<a href="https://docs.docker.com/engine/reference/builder/#usage" target="_blank" rel="noopener">官方文档</a>。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">10</span>  </span><br><span class="line"><span class="keyword">ENV</span> NODE_ENV dev </span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /usr/app/myprojectname</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> [<span class="string">"package.json"</span>, <span class="string">"package-lock.json*"</span>, <span class="string">"npm-shrinkwrap.json*"</span>, <span class="string">"./"</span>]</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3001</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> npm run dev</span></span><br></pre></td></tr></table></figure>
+<p>对该dockfile简单的说明如下：</p>
+<blockquote>
+<p>FROM node:10<br>
+该服务所依赖的环境，如果你的docker已经有node:10的镜像，会直接拉取本地已有的镜像，若没有则会从dockerhub镜像库拉取</p>
+</blockquote>
+<blockquote>
+<p>ENV NODE_ENV dev<br>
+设定环境变量</p>
+</blockquote>
+<blockquote>
+<p>WORKDIR /usr/app/myprojectname<br>
+设定你的项目在容器中的位置，一个容器可以看成是一个小的linux系统，所以我们可以在容器启动后通过命令：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it ecef8319d2c8 /bin/sh</span></span><br></pre></td></tr></table></figure>
+<p>(ecef8319d2c8 是你的 container id)<br>
+直接进入到项目目录下，也可以查看整个容器的文件目录情况。</p>
+<blockquote>
+<p>COPY [“package.json”, “package-lock.json*”, “npm-shrinkwrap.json*”, “./”]<br>
+将本地目录下的指定的文件复制到上面设置的 WORKDIR的项目目录中</p>
+</blockquote>
+<blockquote>
+<p>RUN npm install 运行你需要运行的命令</p>
+</blockquote>
+<blockquote>
+<p>COPY . . 同上，<code>.</code>代表当前目录，即将当前目录的文件复制到docker的项目根目录下。</p>
+</blockquote>
+<blockquote>
+<p>EXPOSE 3001 将端口号暴露出来，后续可直接在宿主机器通过 127.0.0.1:3001暴露出来</p>
+</blockquote>
+<blockquote>
+<p>CMD npm run dev  设置容器启动后运行的命令</p>
+</blockquote>
+<p>配置好dockerfile文件后,在项目根目录使用命令：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> <span class="keyword">build </span>-t yourDockerImageName .</span><br></pre></td></tr></table></figure>
+<p>(tip: 你的docker 镜像的命名格式最好是 你想上传该镜像的镜像库的注册ID/镜像名， 否则可能会因为命名的不唯一上传报错)</p>
+<p>buil完之后可以运行你的镜像了。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3000</span>:<span class="number">3000</span>  yourimagename</span><br></pre></td></tr></table></figure>
+<h6><span id="构建docker-compose"> 构建docker-compose</span></h6>
+<blockquote>
+<p>Compose 是用于定义和运行多容器 Docker 应用程序的工具。在 Docker Compose 里，我们通过一个配置文件，将所有与应用系统相关的软件及它们对应的容器进行配置，之后使用 Docker Compose 提供的命令进行启动，就能一次性启动并管理多个相关联的容器。</p>
+</blockquote>
+<p>这里将上述的构建的mysql容器和node服务器的容器构建docker-compose.yml 配置文件：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">version</span>: <span class="string">'2.1'</span></span><br><span class="line"><span class="attribute">networks</span>:</span><br><span class="line">  <span class="attribute">webapp-network</span>:</span><br><span class="line"></span><br><span class="line"><span class="attribute">nodeService</span>:</span><br><span class="line">  <span class="attribute">server</span>:</span><br><span class="line">    <span class="attribute">image</span>: </span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">NODE_ENV</span>: dev</span><br><span class="line">    <span class="attribute">volumes</span>: </span><br><span class="line">      - ./<span class="attribute">sourse</span>:/usr/app/nodeService/sourse</span><br><span class="line">    <span class="attribute">links</span>:</span><br><span class="line">        - db</span><br><span class="line">    <span class="attribute">depends_on</span>: </span><br><span class="line">      - db</span><br><span class="line">    <span class="attribute">networks</span>:</span><br><span class="line">        - webapp-network</span><br><span class="line">    <span class="attribute">ports</span>:</span><br><span class="line">      - <span class="number">3001</span>:<span class="number">3001</span></span><br><span class="line">  </span><br><span class="line">  <span class="attribute">db</span>:</span><br><span class="line">    <span class="attribute">image</span>: <span class="attribute">mysql</span>:<span class="number">5.7</span></span><br><span class="line">    <span class="attribute">volumes</span>:</span><br><span class="line">      - <span class="attribute">db-data</span>:/var/lib/mysql</span><br><span class="line">    <span class="attribute">environment</span>:</span><br><span class="line">      <span class="attribute">MYSQL_ROOT_PASSWORD</span>: <span class="number">123456</span></span><br><span class="line">    <span class="attribute">ports</span>:</span><br><span class="line">      - <span class="number">3306</span>:<span class="number">3306</span></span><br><span class="line">    <span class="attribute">networks</span>:</span><br><span class="line">      - webapp-network</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attribute">volumes</span>:</span><br><span class="line">  <span class="attribute">db-data</span>: &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>注意： node在连接数据库容器时需要将数据库相关配置文件的<code>host</code> 修改为<code>host: 'db'</code></p>
+<p>关于docker-compose.yml的配置说明可以详细阅读<a href="https://docs.docker.com/compose/compose-file/" target="_blank" rel="noopener">官网</a></p>
+<p>其中： 注意</p>
+<ul>
+<li>
+<p>Volumes 该选项是 <code>${YOUR LOCAL PATH}:{DOCKER'S ABSOLUTE PATH}</code>, 也即可以将宿主机的本地文件和容器的某个绝对路径下的文件共享。什么时候使用，可以在项目有需要存放持久数据文件的时候将本地或者ftp服务器上专门的文件存放位置映射到容器的文件存放目录中。</p>
+</li>
+<li>
+<p>Network: 使用 Dcoker 部署项目常常会生成很多个容器，这些容器默认只能通过 ip 地址进行访问，但新建一个容器所产生的 ip 地址是不可控的，这就给容器之间通信带来了一定的麻烦。Docker 中使用 Network 来管理容器之间的通信，只要两个 Conteiner 处于同一个 Network 之中，就可以通过容器名去互相通信。</p>
+</li>
+</ul>
+<p>构建好之后只要在当前路径下使用命令就能启动docker-compose：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up</span></span><br></pre></td></tr></table></figure>
+<h3><span id="常用docker命令"> 常用docker命令</span></h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps // 查看正在运行的镜像</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> </span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0.18 /bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker commit -a <span class="string">'username'</span> -m <span class="string">'test'</span> 7aa8647dcfb5 <span class="built_in">test</span>-app:<span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker tag <span class="built_in">test</span>-app mydockerapp/<span class="built_in">test</span>-app:<span class="built_in">test</span> // 修改tag</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it ecef8319d2c8 /bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi 89bba6dbdd98  // 删除某个容器</span></span><br></pre></td></tr></table></figure>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://juejin.im/post/5d0737a86fb9a07f087095f2" target="_blank" rel="noopener">https://juejin.im/post/5d0737a86fb9a07f087095f2</a></li>
+</ul>
 
 
                 <hr>

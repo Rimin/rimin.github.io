@@ -161,12 +161,12 @@
                     
 
                         
-                    
-
-                        
                         <li>
                             <a href="/tags/">Categories</a>
                         </li>
+                        
+                    
+
                         
                     
                     
@@ -264,20 +264,23 @@
 <ol>
 <li><code>Bridge Driver</code>: 默认网络驱动程序. 如果未指定驱动程序，则这是您正在创建的网络类型. 当您的应用程序在需要通信的独立容器中运行时，通常会使用网桥网络。</li>
 <li><code>Host Driver</code> : 对于独立容器，取消容器与Docker主机之间的网络隔离，并直接使用主机的网络. host仅可用于Docker 17.06及更高版本上的集群服务.</li>
-<li><code>Overlay Driver</code>: 覆盖网络将多个Docker守护程序连接在一起，并使群集服务能够相互通信. 还可以使用覆盖网络来促进群集服务和独立容器之间或不同Docker守护程序上的两个独立容器之间的通信. 这种策略消除了在这些容器之间进行操作系统级路由的需要。<br>
-<code>MacLan Driver</code>: 为容器分配MAC地址，使其在网络上显示为物理设备。<br>
-<code>None Driver</code>: 对于此容器，禁用所有联网. 通常与自定义网络驱动程序一起使用. none不适用于群体服务。</li>
+<li><code>Overlay Driver</code>: 覆盖网络将多个Docker守护程序连接在一起，并使群集服务能够相互通信. 还可以使用覆盖网络来促进群集服务和独立容器之间或不同Docker守护程序上的两个独立容器之间的通信. 这种策略消除了在这些容器之间进行操作系统级路由的需要。</li>
+<li><code>MacLan Driver</code>: 为容器分配MAC地址，使其在网络上显示为物理设备。</li>
+<li><code>None Driver</code>: 对于此容器，禁用所有联网. 通常与自定义网络驱动程序一起使用. none不适用于群体服务。</li>
 </ol>
 </blockquote>
 <h3><span id="docker-实践"> docker 实践</span></h3>
-<p>首先在安装<code>docker</code>, 安装的环境可以是 <code>linux</code>, <code>mac ox</code>, <code>window</code>。 其中<code>mac ox</code>, <code>window</code>分别安装的是<code>docker for mac</code>, <code>doker for window</code> （具体 mac 和window 的版本还有要求可在官网查询）。其原理实际上只是在<code>mac</code>或者 <code>window</code>的环境上造了一个<code>linux</code>的环境，如下图所示：<br>
+<p>首先先安装<code>docker</code>, 安装的环境可以是 <code>linux</code>, <code>mac ox</code>, <code>window</code>。 其中<code>mac ox</code>, <code>window</code>分别安装的是<code>docker for mac</code>, <code>doker for window</code> （具体 mac 和window 的版本还有要求可在官网查询）。其原理实际上只是在<code>mac</code>或者 <code>window</code>的环境上造了一个<code>linux</code>的环境，如下图所示：<br>
 <img src="https://github.com/Rimin/rimin.github.io/blob/master/img/docker/3.png?raw=true" alt="image3"></p>
 <p>这里以 <code>Mysql</code> + <code>NodeJs</code> 的服务为例，构建镜像并用<code>docker compose</code> 构建成容器集群。</p>
 <h5><span id="搭建并启动mysql数据库容器服务"> 搭建并启动<code>Mysql</code>数据库容器服务</span></h5>
 <ol>
-<li>寻找镜像源（<a href="https://hub.docker.com/_/mysql?tab=tags" target="_blank" rel="noopener">镜像库地址</a>）及确定版本。<br>
-在</li>
-<li>执行以下操作（5.7为版本号）：</li>
+<li>
+<p>寻找镜像源（<a href="https://hub.docker.com/_/mysql?tab=tags" target="_blank" rel="noopener">镜像库地址</a>）及确定版本。</p>
+</li>
+<li>
+<p>执行以下操作（5.7为版本号）：</p>
+</li>
 </ol>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull mysql:<span class="number">5.7</span></span><br></pre></td></tr></table></figure>
 <ol start="3">
@@ -290,7 +293,7 @@
 <li>使用：可以在宿主机器中直接登录（注意，前提是宿主机已经安装mysql及可执行mysql命令），宿主机器可以直接连接该数据库。即以下操作：</li>
 </ol>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> -p <span class="number">3306</span>:<span class="number">3306</span> mysql:<span class="number">5.7</span></span><br></pre></td></tr></table></figure>
-<p>接着：</p>
+<p>接着在宿主机登录容器中的 <code>mysql</code>：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  mysql -h <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>  -P <span class="number">3306</span> -u root -p</span><br></pre></td></tr></table></figure>
 <p>(然后输入密码，注意 -h和 -P需要写全，否则可能会报错)</p>
 <h5><span id="构建node服务的相关镜像文件"> 构建Node服务的相关镜像文件</span></h5>
@@ -332,8 +335,8 @@
 <p>配置好dockerfile文件后, 在项目根目录使用命令：</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">docker</span> <span class="keyword">build </span>-t yourDockerImageName .</span><br></pre></td></tr></table></figure>
 <p>(注意: 你的docker镜像的命名格式最好是 你想上传该镜像的镜像库的注册ID/镜像名， 否则可能会因为命名的不唯一而被拒绝上传)</p>
-<p>buil完之后可以运行你的镜像了。</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3000</span>:<span class="number">3000</span>  yourDockerImageName</span><br></pre></td></tr></table></figure>
+<p>build完之后可以运行你的镜像了。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3000</span>:<span class="number">3000</span>  yourDockerImageName</span><br></pre></td></tr></table></figure>
 <h6><span id="构建docker-compose"> 构建docker-compose</span></h6>
 <blockquote>
 <p>Compose 是用于定义和运行多容器 Docker 应用程序的工具。在 Docker Compose 里，我们通过一个配置文件，将所有与应用系统相关的软件及它们对应的容器进行配置，之后使用 Docker Compose 提供的命令进行启动，就能一次性启动并管理多个相关联的容器。</p>
@@ -344,7 +347,7 @@
 <p>其中比较难理解的：</p>
 <ul>
 <li>
-<p>Volumes 该选项是 <code>${YOUR LOCAL PATH}:{DOCKER'S ABSOLUTE PATH}</code>, 也即可以将宿主机的本地文件和容器的某个绝对路径下的文件共享。什么时候使用？可以在项目有需要存放持久数据文件的时候将本地或者ftp服务器上专门的文件存放位置映射到容器的文件存放目录中。</p>
+<p>Volumes配置相关： 该选项是 <code>${YOUR LOCAL PATH}:{DOCKER'S ABSOLUTE PATH}</code>, 也即可以将宿主机的本地文件和容器的某个绝对路径下的文件共享。什么时候使用？可以在项目有需要存放持久数据文件的时候将本地或者ftp服务器上专门的文件存放位置映射到容器的文件存放目录中。</p>
 </li>
 <li>
 <p>容器间通信相关:</p>

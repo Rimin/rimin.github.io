@@ -147,10 +147,6 @@
                     
 
                         
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
                     
 
                         
@@ -161,11 +157,15 @@
                     
 
                         
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
                     
 
                         
                         <li>
-                            <a href="/tags/">Categories</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -380,6 +380,25 @@
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">services:</span></span><br><span class="line"><span class="symbol">  proxy:</span></span><br><span class="line"><span class="symbol">    build:</span> ./proxy</span><br><span class="line"><span class="symbol">    networks:</span></span><br><span class="line">      - front</span><br><span class="line"><span class="symbol">  app:</span></span><br><span class="line"><span class="symbol">    build:</span> ./app</span><br><span class="line"><span class="symbol">    networks:</span></span><br><span class="line">      - front</span><br><span class="line">      - back</span><br><span class="line"><span class="symbol">  db:</span></span><br><span class="line"><span class="symbol">    image:</span> postgres</span><br><span class="line"><span class="symbol">    networks:</span></span><br><span class="line">      - back</span><br></pre></td></tr></table></figure>
 <p>构建好之后只要在当前路径下使用命令就能启动docker-compose：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+<h6><span id="总结docker-network相关"> 总结：docker network相关</span></h6>
+<ul>
+<li>
+<p>bridge模式: 默认使用<code>bridge</code>模式, 为容器提供一个独立的网络环境，因此，若要和其他容器连接，可以使用上述的<code>link</code>和服务名的方法。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker<span class="built_in"> network </span>create my-net</span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">create</span> <span class="comment">--name my-nginx \</span></span><br><span class="line">  <span class="comment">--network my-net \</span></span><br><span class="line">  <span class="comment">--publish 8080:80 \</span></span><br><span class="line">  nginx:latest</span><br></pre></td></tr></table></figure>
+<p>断开连接</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker<span class="built_in"> network </span>disconnect my-net my-nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>host模式：该模式会破坏docker容器的网络隔离，使得所有的集群中的容器都使用宿主机的host。但是该模式在docker for mac 和docker for window 下不生效，因此如果你想在这两种环境中连接其他该环境中的容器，可以使用 docker 特有的域名 <code>host.docker.internal</code> 作为宿主网络的域名。（因宿主机ip可能会经常变化）</p>
+</li>
+<li>
+<p>overlay 模式：该模式适用于多个不同的docker进程间的容器通信。即有多个Docker host，希望能够通过Docker swarm连接起来。具体可以参考<a href="https://docs.docker.com/network/overlay/" target="_blank" rel="noopener">overlay network</a></p>
+</li>
+<li>
+<p>macvlan 模式： 略</p>
+</li>
+</ul>
 <h3><span id="注意的点"> 注意的点</span></h3>
 <blockquote>
 <p>Docker 容器启动时，默认会把容器内部第一个进程，也就是pid=1的程序，作为docker容器是否正在运行的依据，如果 docker 容器pid=1的进程挂了，那么docker容器便会直接退出。</p>
@@ -391,7 +410,7 @@
 <p>因此，如果使用<code>pm2</code>来部署<code>node</code>服务, 或者使用<code>ngnix</code>来部署前端服务时，需要注意进程被自动退出问题：<br>
 需要加上防止后台运行的设置如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start ./master.js --no-daemon  # pm2</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">daemon off;   # 关闭后台运行 ngnix.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemon off;   # 关闭后台运行 ngnix.conf</span><br></pre></td></tr></table></figure>
 <h3><span id="常用docker命令"> 常用docker命令</span></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps // 查看正在运行的镜像</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">  docker build -t yourimagename .</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0.18 /bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker commit -a <span class="string">'username'</span> -m <span class="string">'test'</span> 7aa8647dcfb5 <span class="built_in">test</span>-app:<span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker tag <span class="built_in">test</span>-app mydockerapp/<span class="built_in">test</span>-app:<span class="built_in">test</span> // 修改tag</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it ecef8319d2c8 /bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi 89bba6dbdd98  // 删除某个容器</span></span><br></pre></td></tr></table></figure>
 <p>参考链接：</p>

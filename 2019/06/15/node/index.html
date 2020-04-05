@@ -145,10 +145,6 @@
                     
 
                         
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
                     
 
                         
@@ -159,11 +155,15 @@
                     
 
                         
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
                     
 
                         
                         <li>
-                            <a href="/tags/">Categories</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -229,7 +229,7 @@
 <blockquote>
 <p><code>Node.js</code> 底层是 <code>C++</code>（<code>V8</code>也是<code>C++</code>写的）。底层代码中，近半数都用于事件队列、回调函数队列的构建。用事件驱动来完成服务器的任务调度，犹如&quot;针尖上的舞蹈&quot;，用一个线程，担负起了处理非常多的任务的使命。</p>
 </blockquote>
-<h4><span id="当开启一个-node-服务时发生了什么"> 当开启一个 Node 服务时，发生了什么？</span></h4>
+<h3><span id="当开启一个-node-服务时发生了什么"> 当开启一个 Node 服务时，发生了什么？</span></h3>
 <p>我们将一段简单的代码用于开启一个服务器：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"><span class="keyword">var</span> server = http</span><br><span class="line">  .createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">      <span class="string">"Content-type"</span>: <span class="string">"text-plain"</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(global);</span><br><span class="line">    res.end();</span><br><span class="line">  &#125;)</span><br><span class="line">  .listen(<span class="number">8900</span>);</span><br></pre></td></tr></table></figure>
 <p>通过一个简单的开启一个 <code>Node</code> 服务器来看一下全局 <code>global</code> 对象：</p>
@@ -240,12 +240,12 @@
 <li>process.env： 环境变量，例如通过 process.env.NODE_ENV 获取不同环境项目配置信息</li>
 <li>process.nextTick：这个在谈及 EventLoop 时经常为会提到</li>
 <li>process.pid：获取当前进程id</li>
-<li>process.ppid：当前进程对应的父进程</li>
+<li>process.ppid：当前进程对应的父进程（子进程的所有资源都继承父进程，得到父进程资源的副本，但是两个是单独的进程，继承了以后二者就没有什么关联了，子进程单独运行，因此不同于进程和线程的关系）</li>
 <li>process.cwd()：获取当前进程工作目录，</li>
 <li>process.platform：获取当前进程运行的操作系统平台</li>
 <li>process.uptime()：当前进程已运行时间，例如：pm2 守护进程的 uptime 值</li>
 <li>进程事件： process.on(‘uncaughtException’,cb) 捕获异常信息、 process.on(‘exit’,cb）进程推出监听</li>
-<li>三个标准流： process.stdout 标准输出、 process.stdin 标准输入、 process.stderr 标准错误输出</li>
+<li>三个标准流： process.stdout 标准输出、 process.stdin 标准输入、 process.stderr 标准错误输出 （node 的 <code>console.log</code> 实际上就是对<code>stdout</code>,<code>stderr</code>的封装）</li>
 <li>process.title 指定进程名称，有的时候需要给进程指定一个名称</li>
 </ul>
 <p>除了线程，当开启了一个Node服务时，实际上开启了：</p>
@@ -256,7 +256,7 @@
 <li>One JS Engine Instance：一个 JS 引擎实例。</li>
 <li>One Node.js Instance： 一个<code>NodeJs</code>应用实例。</li>
 </ul>
-<h6><span id="关于node单线程的误区"> 关于Node单线程的误区</span></h6>
+<h5><span id="关于node单线程的误区"> 关于Node单线程的误区</span></h5>
 <p>虽说Node是单线程，但是实际上查看实际程序运行时的树形图：</p>
 <p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/node/3.jpg?raw=true" alt="Alt 调试结果"></p>
 <p>那么，为什么一个服务，<code>Node</code>启动了不止一个进程呢？</p>
@@ -277,7 +277,7 @@
 <p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/node/2.jpg?raw=true" alt="Alt 调试结果"></p>
 <p>Node的异步调用实际上是由Libuv来支持的。而读文件等的实际操作是由Libuv来完成。</p>
 <p><img src="https://github.com/Rimin/rimin.github.io/blob/master/img/node/1.jpg?raw=true" alt="Alt 调试结果"></p>
-<h6><span id="node多进程"> Node多进程</span></h6>
+<h5><span id="node多进程"> Node多进程</span></h5>
 <p>我们知道单线程会带来弊端：</p>
 <ol>
 <li>无法利用多核CPU</li>
@@ -296,6 +296,28 @@
 <li>一些管理工具比如<code>pm2</code>(实际上也是使用<code>cluster</code>), <code>forver</code>等都可以实现进程监控，错误自动重启等。</li>
 <li>开多个进程监听同一个窗口，使用Node提供的<code>cluster</code>模块。</li>
 </ul>
+<h3><span id="node的作用域及global对象相关"> Node的作用域及Global对象相关</span></h3>
+<p>我们知道，node 是遵循 <code>CommonJs</code> 规范，node以文件为模块，其中module和exports用于输出模块，require用于引用模块。而全局变量<code>global</code>,则应该是模块中都能访问得到的。</p>
+<blockquote>
+<p>Global Objects全局对象These objects are available in all modules. Some of these objects aren’t actually in the global scope but in the module scope - this will be noted.(这些对象在所有的模块中都可用。实际上有些对象并不在全局作用域范围中，但是在它的模块作用域中------这些会标识出来的。)</p>
+</blockquote>
+<p>全局对象这个概念我想大家应该不会感到陌生，在浏览器中，最高级别的作用域是Global Scope ，这意味着如果你在Global Scope中使用 “var” 定义一个变量，这个变量将会被定义成Global Scope。</p>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a);  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>In Node this is different. The top-level scope is not the global scope;var somethinginside a Node module will be local to that module.<br>
+(但是在NodeJS里是不一样的，最高级别的Scope不是Global Scope，在一个Module里用 “var” 定义个变量，这个变量只是在这个Module的Scope里。)</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'var-name'</span>;</span><br><span class="line">name = <span class="string">'name'</span>;</span><br><span class="line">global.name=<span class="string">'global-name'</span>;</span><br><span class="line"><span class="keyword">this</span>.name = <span class="string">'module-name'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(global.name);  <span class="comment">// 'global-name'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.name);  <span class="comment">// 'module-name'</span></span><br><span class="line"><span class="built_in">console</span>.log(name);  <span class="comment">// name</span></span><br></pre></td></tr></table></figure>
+<p>说到 node 的作用域相关，就不得不在这里mark一下 <code>exports</code> 和 <code>module.exports</code> 的区别。</p>
+<blockquote>
+<p>module.exports 初始值为一个空对象 {}.<br>
+exports 是指向的 module.exports 的引用。<br>
+require() 返回的是 module.exports 而不是 exports。<br>
+例子：</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//utils.js</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">module</span>.exports); <span class="comment">//能打印出结果为：&#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(exports); <span class="comment">//能打印出结果为：&#123;&#125;</span></span><br><span class="line"></span><br><span class="line">exports.a = <span class="number">200</span>; <span class="comment">//这里辛苦劳作帮 module.exports 的内容给改成 &#123;a : 200&#125;</span></span><br><span class="line"></span><br><span class="line">exports = <span class="string">'指向其他内存区'</span>; <span class="comment">//这里把exports的指向指走</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'/utils'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 打印为 &#123;a : 200&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出，require 引用的是 <code>module.exports</code> 的内容。</p>
 <p>参考：</p>
 <ul>
 <li>

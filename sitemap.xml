@@ -4,7 +4,14 @@
   <url>
     <loc>https://rimin.github.io/2020/02/16/docker/</loc>
     
-    <lastmod>2020-03-15T04:21:02.144Z</lastmod>
+    <lastmod>2020-04-05T09:56:16.408Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://rimin.github.io/2019/06/15/node/</loc>
+    
+    <lastmod>2020-03-26T14:29:52.966Z</lastmod>
     
   </url>
   
@@ -37,13 +44,6 @@
   </url>
   
   <url>
-    <loc>https://rimin.github.io/2019/06/05/safe/</loc>
-    
-    <lastmod>2020-02-16T08:10:06.094Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://rimin.github.io/2019/04/16/this/</loc>
     
     <lastmod>2020-02-16T08:10:06.094Z</lastmod>
@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>https://rimin.github.io/2019/04/21/object/</loc>
+    <loc>https://rimin.github.io/2019/06/05/safe/</loc>
     
-    <lastmod>2020-02-16T08:10:06.093Z</lastmod>
+    <lastmod>2020-02-16T08:10:06.094Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://rimin.github.io/2019/06/15/node/</loc>
+    <loc>https://rimin.github.io/2019/04/21/object/</loc>
     
     <lastmod>2020-02-16T08:10:06.093Z</lastmod>
     
@@ -86,6 +86,13 @@
   </url>
   
   <url>
+    <loc>https://rimin.github.io/2019/03/03/history/</loc>
+    
+    <lastmod>2020-02-16T08:10:06.090Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://rimin.github.io/2019/03/01/fistPage/</loc>
     
     <lastmod>2020-02-16T08:10:06.090Z</lastmod>
@@ -94,13 +101,6 @@
   
   <url>
     <loc>https://rimin.github.io/2019/04/30/eventLoop/</loc>
-    
-    <lastmod>2020-02-16T08:10:06.090Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://rimin.github.io/2019/03/03/history/</loc>
     
     <lastmod>2020-02-16T08:10:06.090Z</lastmod>
     
@@ -128,6 +128,13 @@
   </url>
   
   <url>
+    <loc>https://rimin.github.io/2019/04/18/dataType/</loc>
+    
+    <lastmod>2020-02-16T08:10:06.088Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://rimin.github.io/2019/04/18/crossOrign/</loc>
     
     <lastmod>2020-02-16T08:10:06.088Z</lastmod>
@@ -142,21 +149,14 @@
   </url>
   
   <url>
-    <loc>https://rimin.github.io/2019/04/18/dataType/</loc>
-    
-    <lastmod>2020-02-16T08:10:06.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://rimin.github.io/2019/06/13/cache/</loc>
+    <loc>https://rimin.github.io/2019/04/22/call,apply,bind/</loc>
     
     <lastmod>2020-02-16T08:10:06.087Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://rimin.github.io/2019/04/22/call,apply,bind/</loc>
+    <loc>https://rimin.github.io/2019/06/13/cache/</loc>
     
     <lastmod>2020-02-16T08:10:06.087Z</lastmod>
     

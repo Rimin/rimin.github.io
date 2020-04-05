@@ -135,10 +135,6 @@
                     
 
                         
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
                     
 
                         
@@ -149,11 +145,15 @@
                     
 
                         
+                        <li>
+                            <a href="/tags/">Categories</a>
+                        </li>
+                        
                     
 
                         
                         <li>
-                            <a href="/tags/">Categories</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -204,11 +204,11 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
+                    <a href="#Concept" title="Concept" rel="1">Concept</a>
+                
                     <a href="#JavaScript" title="JavaScript" rel="9">JavaScript</a>
                 
                     <a href="#自行实现系列" title="自行实现系列" rel="1">自行实现系列</a>
-                
-                    <a href="#Concept" title="Concept" rel="1">Concept</a>
                 
                     <a href="#Broswser" title="Broswser" rel="2">Broswser</a>
                 
@@ -228,8 +228,6 @@
                 
                     <a href="#继承" title="继承" rel="1">继承</a>
                 
-                    <a href="#NodeJs" title="NodeJs" rel="2">NodeJs</a>
-                
                     <a href="#Broswer" title="Broswer" rel="1">Broswer</a>
                 
                     <a href="#安全" title="安全" rel="1">安全</a>
@@ -244,15 +242,17 @@
                 
                     <a href="#缓存" title="缓存" rel="1">缓存</a>
                 
-                    <a href="#数据类型" title="数据类型" rel="1">数据类型</a>
-                
-                    <a href="#DOM" title="DOM" rel="1">DOM</a>
-                
-                    <a href="#数据库" title="数据库" rel="1">数据库</a>
-                
                     <a href="#docker" title="docker" rel="1">docker</a>
                 
                     <a href="#backend" title="backend" rel="1">backend</a>
+                
+                    <a href="#数据库" title="数据库" rel="1">数据库</a>
+                
+                    <a href="#DOM" title="DOM" rel="1">DOM</a>
+                
+                    <a href="#数据类型" title="数据类型" rel="1">数据类型</a>
+                
+                    <a href="#NodeJs" title="NodeJs" rel="2">NodeJs</a>
                 
                     <a href="#this" title="this" rel="1">this</a>
                 
@@ -262,6 +262,28 @@
 
             <!-- 标签列表 -->
 
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Concept">
+                    <span class="tag-text">Concept</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/05/02/concept/">
+                        <h2 class="post-title">
+                            一些概念
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
             
             <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="JavaScript">
@@ -348,9 +370,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2019/04/18/dataType/">
+                     <a href="/2019/06/10/dom/">
                         <h2 class="post-title">
-                            JS数据类型
+                            理解JS DOM事件
                         </h2>
                         
                     </a>
@@ -363,9 +385,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2019/06/10/dom/">
+                     <a href="/2019/04/18/dataType/">
                         <h2 class="post-title">
-                            理解JS DOM事件
+                            JS数据类型
                         </h2>
                         
                     </a>
@@ -418,28 +440,6 @@
                      <a href="/2019/04/22/call,apply,bind/">
                         <h2 class="post-title">
                             自行实现call apply bind
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Concept">
-                    <span class="tag-text">Concept</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/05/02/concept/">
-                        <h2 class="post-title">
-                            一些概念
                         </h2>
                         
                     </a>
@@ -678,43 +678,6 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="NodeJs">
-                    <span class="tag-text">NodeJs</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/06/15/node/">
-                        <h2 class="post-title">
-                            Node内部机制
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/05/01/eventLoop-node/">
-                        <h2 class="post-title">
-                            NodeJs 事件循环机制
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="Broswer">
                     <span class="tag-text">Broswer</span>
                 </span>
@@ -899,72 +862,6 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="数据类型">
-                    <span class="tag-text">数据类型</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/04/18/dataType/">
-                        <h2 class="post-title">
-                            JS数据类型
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="DOM">
-                    <span class="tag-text">DOM</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/06/10/dom/">
-                        <h2 class="post-title">
-                            理解JS DOM事件
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="数据库">
-                    <span class="tag-text">数据库</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/09/18/datdabasepool/">
-                        <h2 class="post-title">
-                            一次疑似数据库死锁问题的排查
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="docker">
                     <span class="tag-text">docker</span>
                 </span>
@@ -999,6 +896,109 @@
                      <a href="/2020/02/16/docker/">
                         <h2 class="post-title">
                             docker初识与实践
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="数据库">
+                    <span class="tag-text">数据库</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/09/18/datdabasepool/">
+                        <h2 class="post-title">
+                            一次疑似数据库死锁问题的排查
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="DOM">
+                    <span class="tag-text">DOM</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/06/10/dom/">
+                        <h2 class="post-title">
+                            理解JS DOM事件
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="数据类型">
+                    <span class="tag-text">数据类型</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/04/18/dataType/">
+                        <h2 class="post-title">
+                            JS数据类型
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="NodeJs">
+                    <span class="tag-text">NodeJs</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/05/01/eventLoop-node/">
+                        <h2 class="post-title">
+                            NodeJs 事件循环机制
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/06/15/node/">
+                        <h2 class="post-title">
+                            Node内部机制
                         </h2>
                         
                     </a>

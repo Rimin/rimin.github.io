@@ -142,6 +142,9 @@
                     
 
                         
+                    
+
+                        
                         <li>
                             <a href="/about/">About</a>
                         </li>
@@ -152,9 +155,6 @@
                         <li>
                             <a href="/tags/">Categories</a>
                         </li>
-                        
-                    
-
                         
                     
                     
@@ -214,9 +214,9 @@
                 
                     <a href="#跨域" title="跨域" rel="1">跨域</a>
                 
-                    <a href="#事件循环" title="事件循环" rel="2">事件循环</a>
-                
                     <a href="#博客" title="博客" rel="1">博客</a>
+                
+                    <a href="#事件循环" title="事件循环" rel="2">事件循环</a>
                 
                     <a href="#发展" title="发展" rel="1">发展</a>
                 
@@ -242,11 +242,11 @@
                 
                     <a href="#闭包" title="闭包" rel="1">闭包</a>
                 
-                    <a href="#数据类型" title="数据类型" rel="1">数据类型</a>
-                
                     <a href="#docker" title="docker" rel="1">docker</a>
                 
                     <a href="#backend" title="backend" rel="1">backend</a>
+                
+                    <a href="#数据类型" title="数据类型" rel="1">数据类型</a>
                 
                     <a href="#数据库" title="数据库" rel="1">数据库</a>
                 
@@ -509,6 +509,28 @@
             </div>
             
             <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="博客">
+                    <span class="tag-text">博客</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/03/01/fistPage/">
+                        <h2 class="post-title">
+                            开博第一篇
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="事件循环">
                     <span class="tag-text">事件循环</span>
                 </span>
@@ -536,28 +558,6 @@
                      <a href="/2019/05/01/eventLoop-node/">
                         <h2 class="post-title">
                             NodeJs 事件循环机制
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="博客">
-                    <span class="tag-text">博客</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/03/01/fistPage/">
-                        <h2 class="post-title">
-                            开博第一篇
                         </h2>
                         
                     </a>
@@ -862,28 +862,6 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="数据类型">
-                    <span class="tag-text">数据类型</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2019/04/18/dataType/">
-                        <h2 class="post-title">
-                            JS数据类型
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="docker">
                     <span class="tag-text">docker</span>
                 </span>
@@ -918,6 +896,28 @@
                      <a href="/2020/02/16/docker/">
                         <h2 class="post-title">
                             docker初识与实践
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="数据类型">
+                    <span class="tag-text">数据类型</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2019/04/18/dataType/">
+                        <h2 class="post-title">
+                            JS数据类型
                         </h2>
                         
                     </a>

@@ -147,6 +147,10 @@
                     
 
                         
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
                     
 
                         
@@ -157,15 +161,11 @@
                     
 
                         
-                        <li>
-                            <a href="/tags/">Categories</a>
-                        </li>
-                        
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Categories</a>
                         </li>
                         
                     
@@ -231,6 +231,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a=<span class="string">'One'</span>;</span><br><span class="line">    <span class="keyword">var</span> b=<span class="string">'Two'</span>;</span><br><span class="line">    <span class="keyword">var</span> c=<span class="string">'Three'</span>;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="comment">//实际上它是这样子的</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a,b,c;</span><br><span class="line">    a=<span class="string">'One'</span>;</span><br><span class="line">    b=<span class="string">'Two'</span>;</span><br><span class="line">    c=<span class="string">'Three'</span>;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope=<span class="string">"global"</span>;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">t</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">    <span class="built_in">console</span>.log(scope);  <span class="comment">//undefinded , scope声明覆盖了全局的scope,但是由于变量提升还没有赋值</span></span><br><span class="line">    <span class="keyword">var</span> scope=<span class="string">"local"</span>;  </span><br><span class="line">    <span class="built_in">console</span>.log(scope);  <span class="comment">//local</span></span><br><span class="line">&#125;  </span><br><span class="line">t();</span><br></pre></td></tr></table></figure>
 <p>由于有变量提升的问题，在写js code 的时候，我们需要把变量放在函数级作用域的顶端。</p>
+<h6><span id="注意-使用-use-strict-如果将值分配给一个未声明的变量会自动创建该名称的全局变量则会报错"> 注意： 使用 “use strict” 如果将值分配给一个未声明的变量会自动创建该名称的全局变量，则会报错。</span></h6>
 <h5><span id="let"> let</span></h5>
 <ol>
 <li>
@@ -265,6 +266,9 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(); <span class="comment">// TypeError</span></span><br><span class="line">bar(); <span class="comment">// ReferenceError</span></span><br><span class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这个代码片段经过提升后，实际上会被理解为以下形式：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo;</span><br><span class="line">foo(); <span class="comment">// TypeError</span></span><br><span class="line">bar(); <span class="comment">// ReferenceError</span></span><br><span class="line">foo = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">var</span> bar = ...<span class="keyword">self</span>...</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="var-let-const-如何选择"> var let const 如何选择</span></h4>
+<p><code>var</code>  &lt; <code>let</code> &lt;  <code>const</code><br>
+即为了避免代码的不规范及全局变量污染，优先使用 <code>const</code>,，其次是 <code>let</code> ，最后才是 <code>var</code>。</p>
 <h3><span id="函数优先"> 函数优先</span></h3>
 <p>函数声明和变量声明都会被提升。但是一个值得注意的细节（这个细节可以出现在有多个<br>
 “重复”声明的代码中）是函数会首先被提升，然后才是变量。<br>
@@ -412,7 +416,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Rimin&#39;s Blog 2020 
+                    Copyright &copy; Rimin&#39;s Blog 2021 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">

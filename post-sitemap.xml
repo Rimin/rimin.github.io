@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://rimin.github.io</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/06/15/node/</loc>
+        <lastmod>2021-02-18T16:26:13.798Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/19/hoisting/</loc>
+        <lastmod>2020-07-14T16:02:17.972Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2020/02/16/docker/</loc>
+        <lastmod>2020-05-11T12:14:37.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/06/05/safe/</loc>
+        <lastmod>2020-02-16T08:10:06.094Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/16/this/</loc>
+        <lastmod>2020-02-16T08:10:06.094Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/21/object/</loc>
+        <lastmod>2020-02-16T08:10:06.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/05/04/inherite/</loc>
+        <lastmod>2020-02-16T08:10:06.092Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/06/13/http/</loc>
+        <lastmod>2020-02-16T08:10:06.091Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/03/01/fistPage/</loc>
+        <lastmod>2020-02-16T08:10:06.090Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/30/eventLoop/</loc>
+        <lastmod>2020-02-16T08:10:06.090Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/03/03/history/</loc>
+        <lastmod>2020-02-16T08:10:06.090Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/05/01/eventLoop-node/</loc>
+        <lastmod>2020-02-16T08:10:06.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/06/10/dom/</loc>
+        <lastmod>2020-02-16T08:10:06.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/09/18/datdabasepool/</loc>
+        <lastmod>2020-02-16T08:10:06.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/05/02/concept/</loc>
+        <lastmod>2020-02-16T08:10:06.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/18/crossOrign/</loc>
+        <lastmod>2020-02-16T08:10:06.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/18/dataType/</loc>
+        <lastmod>2020-02-16T08:10:06.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/22/call,apply,bind/</loc>
+        <lastmod>2020-02-16T08:10:06.087Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/06/13/cache/</loc>
+        <lastmod>2020-02-16T08:10:06.087Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/04/18/%20closure/</loc>
+        <lastmod>2020-02-16T08:10:06.086Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://rimin.github.io/2019/03/04/browser/</loc>
+        <lastmod>2020-02-16T08:10:06.086Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->
